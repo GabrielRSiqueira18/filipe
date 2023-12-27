@@ -1,0 +1,22 @@
+:root {
+  --gray-300: #d1d5db;
+  --gray-50: #f9fafb;
+  --gray-950: #030712;
+  --red-600: #dc2626;
+  --red-950: #450a0a;
+  --green-600: #16a34a;
+  --green-700: #15803d;
+  --orange-600: #ea580c;
+
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  background-color: var(--gray-300);
+}
