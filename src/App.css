@@ -164,16 +164,16 @@ table td:last-child {
 
 @media screen and (max-width: 1024px) {
   .container-students-situation {
-    padding: 1rem;
+    padding: 0.75rem;
     background-color: var(--gray-950);
     color: var(--gray-50);
-    width: 150px;
+    width: 125px;
     position: relative;
     top: 55px;
   }
 
   .container-students-situation h2 {
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
 
   .container-students-situation p {
@@ -181,16 +181,16 @@ table td:last-child {
   }
 
   .container-total-values-students {
-    padding: 1rem;
+    padding: 0.75rem;
     background-color: var(--gray-950);
     color: var(--gray-50);
-    width: 200px;
+    width: 150px;
     position: relative;
     top: 55px;
   }
   
   .container-total-values-students h2 {
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
   
   .container-total-values-students p {
