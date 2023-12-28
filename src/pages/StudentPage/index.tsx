@@ -26,62 +26,73 @@ export function StudentPage() {
             <button onClick={() => setRegisterStudentModalIsOpen(false)}>X</button>
           </header>
           <form>
-            <label 
-              htmlFor="name">
-                Nome do Aluno:
-            </label>
-            <input 
-              id='name' 
-              type="text" 
-            /> 
+            <div>
+              <label 
+                htmlFor="name">
+                  Nome do Aluno:
+              </label>
+              <input 
+                id='name' 
+                type="text" 
+              /> 
+            </div>
 
-            <label 
-              htmlFor="startDate">Data do Início do Aluno:
-            </label>
-            <input 
-              id='startDate' 
-              type="date" 
-            />
+            <div>
+              <label 
+                htmlFor="startDate">Data do Início do Aluno:
+              </label>
+              <input 
+                id='startDate' 
+                type="date" 
+              />
+            </div>
 
-            <label 
-              htmlFor="startTermToPay">Início Prazo para Pagar:
-            </label>
-            <input 
-              id='startTerToPay' 
-              type="date" 
-            /> 
+            <div>
+              <label 
+                htmlFor="startTermToPay">Início Prazo para Pagar:
+              </label>
+              <input 
+                id='startTerToPay' 
+                type="date" 
+              /> 
+            </div>
 
-            <label 
-              htmlFor="daysOfPayment">Prazo dias do Pagamento:
-            </label>
-            <input 
-              id='daysOfPayment' 
-              type="number" 
-            /> 
+            <div>
+              <label 
+                htmlFor="daysOfPayment">Prazo dias do Pagamento:
+              </label>
+              <input 
+                id='daysOfPayment' 
+                type="number" 
+              /> 
+            </div>
 
-            <label 
-              htmlFor="lasyDayToPay">Fim Prazo para Pagar:
-            </label>
-            <input 
-              id='lasyDayToPay' 
-              type="date" 
-            /> 
+            <div>
+              <label 
+                htmlFor="lasyDayToPay">Fim Prazo para Pagar:
+              </label>
+              <input 
+                id='lasyDayToPay' 
+                type="date" 
+              /></div> 
 
-            <label 
-              htmlFor="incoiceDueDate">Dias para Vencer Fatura:
-            </label>
-            <input 
-              id='incoiceDueDate'
-              type="number" 
-            /> 
+            <div>
+              <label 
+                htmlFor="incoiceDueDate">Dias para Vencer Fatura:
+              </label>
+              <input 
+                id='incoiceDueDate'
+                type="number" 
+              /></div> 
 
-            <label 
-              htmlFor="invoiceValue">Valor Fatura:
-            </label>
-            <input 
-              id='invoiceValue' 
-              type="number" 
-            /> 
+            <div>
+              <label 
+                htmlFor="invoiceValue">Valor Fatura:
+              </label>
+              <input 
+                id='invoiceValue' 
+                type="number" 
+              /></div> 
 
           </form>
         </div>

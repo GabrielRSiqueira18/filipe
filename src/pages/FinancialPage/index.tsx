@@ -1,15 +1,64 @@
 import { useState } from "react"
 import "./style.css"
 import { NavLink } from "react-router-dom"
-import { Student } from "../../components/Student"
+import { Product } from "../../components/Product"
+import * as z from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod";
+
+interface Product {
+  id: string
+  date: string
+  description: string
+  month: string
+  pricePerUnit: number
+  quantity: number
+  totalValue: number
+  type: "Entrada" | "Saída"
+
+}
+
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  return `${date.getDate().toString().padStart(2, '0')}/${date.getMonth() + 1}/${date.getFullYear()}`;
+}
 
 export function FinancialPage() {
+  const { register, handleSubmit, reset, control } = useForm<Product>({})
+
   const [ registerStudentModalIsOpen, setRegisterStudentModalIsOpen ] = useState(false)
+
+  const [ productList, setProductList ] = useState<Product[]>([])
+
+  const [ countProductId, setCountProductId ] = useState(1)
 
   function cloneModalWithClickInLayer(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     if (e.target instanceof HTMLDivElement && e.target.className === "modal-layer") {
       setRegisterStudentModalIsOpen(false)
     }
+  }
+
+  function handleRegisterNewProduct(data: Product) {
+    const { date, description, month, pricePerUnit, quantity, totalValue, type } = data
+
+    const newProduct: Product = {
+      date,
+      description,
+      id: countProductId.toString(),
+      month,
+      pricePerUnit,
+      quantity,
+      totalValue,
+      type
+    }
+
+    setProductList([...productList, newProduct])
+
+    setCountProductId(state => state+=1)
+
+    reset()
+
+    setRegisterStudentModalIsOpen(false )
   }
 
   return(
@@ -25,64 +74,94 @@ export function FinancialPage() {
             <button>Cadastrar</button>
             <button onClick={() => setRegisterStudentModalIsOpen(false)}>X</button>
           </header>
-          <form>
-            <label 
-              htmlFor="name">
-                Nome do Aluno:
-            </label>
-            <input 
-              id='name' 
-              type="text" 
-            /> 
+          <form onSubmit={handleSubmit(handleRegisterNewProduct)}>
+            <div>
+              <label 
+                htmlFor="date">
+                  Data:
+              </label>
+              <input 
+                id='date' 
+                type="date" 
+                {...register("date")}
+                required
+              /> 
+            </div>
 
-            <label 
-              htmlFor="startDate">Data do Início do Aluno:
-            </label>
-            <input 
-              id='startDate' 
-              type="date" 
-            />
+            {/* <div>
+              <label 
+                htmlFor="startDate">Data do Início do Aluno:
+              </label>
+              <input 
+                id='startDate' 
+                type="date" 
+              />
+            </div> */}
 
-            <label 
-              htmlFor="startTermToPay">Início Prazo para Pagar:
-            </label>
-            <input 
-              id='startTerToPay' 
-              type="date" 
-            /> 
+            <div>
+              <label 
+                htmlFor="description">Descrição
+              </label>
+              <input 
+                id='description' 
+                type="text" 
+                {...register("description")}
+                required
+              /> 
+            </div>
 
-            <label 
-              htmlFor="daysOfPayment">Prazo dias do Pagamento:
-            </label>
-            <input 
-              id='daysOfPayment' 
-              type="number" 
-            /> 
+            <div>
+              <label 
+                htmlFor="quantity">Quantidade:
+              </label>
+              <input 
+                id='quantity' 
+                type="number" 
+                {...register("quantity")}
+                required
+              /> 
+            </div>
 
-            <label 
-              htmlFor="lasyDayToPay">Fim Prazo para Pagar:
-            </label>
-            <input 
-              id='lasyDayToPay' 
-              type="date" 
-            /> 
+            
 
-            <label 
-              htmlFor="incoiceDueDate">Dias para Vencer Fatura:
-            </label>
-            <input 
-              id='incoiceDueDate'
-              type="number" 
-            /> 
+            <div>
+              <label 
+                htmlFor="pricePerUnit">Valor Unitário
+              </label>
+              <input 
+                id='pricePerUnit' 
+                type="number" 
+                {...register("pricePerUnit")}
+                required
+              />
+            </div> 
 
-            <label 
-              htmlFor="invoiceValue">Valor Fatura:
-            </label>
-            <input 
-              id='invoiceValue' 
-              type="number" 
-            /> 
+            <div>
+              <label 
+                htmlFor="totalValue">Valor Total
+              </label>
+              <input 
+                id='totalValue'
+                type="number"
+                {...register("totalValue")}
+                required 
+              />
+            </div> 
 
+            <div>
+              <label 
+                htmlFor="type">Tipo
+              </label>
+              <input 
+                id='type' 
+                type="text"
+                {...register("type")} 
+                required
+              />
+            </div> 
+            <button className="register">
+              Cadastrar
+            </button>
           </form>
         </div>
       </div>
@@ -110,48 +189,51 @@ export function FinancialPage() {
             <button>Alunos</button>
           </NavLink>
         </header>
+        <form>
+          <div>
+            <input type="text" placeholder="Pesquise por um produto" />
+            <button>Pesquisar</button>
+          </div>
+
+          <div>
+            <button type="button">A-Z</button>
+            <button type="button">Faturas paga maior e menor </button>
+            <button type="button">Situação</button>
+          </div>
+        </form>
+
+
 
         <div className='table-container'>
           <table>
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Aluno</th>
-                <th>Data Início</th>
-                <th>Prazo p/ Pagar</th>
-                <th>Prazo Dias</th>
-                <th>Fim Prazo</th>
-                <th>Dias a Vencer</th>
-                <th>Valor</th>
-                <th>Faturas Pagas</th>
-                <th>Situação</th>
+                <th>Data</th>
+                <th>Mês</th>
+                <th>Descrição</th>
+                <th>Quantidade</th>
+                <th>Valor Unitário</th>
+                <th>Valor Total</th>
+                <th>Tipo</th>
               </tr>
             </thead>
             <tbody>
-              <Student
-                id="001"
-                name='Gabriel Ribeiro Siqueira2'
-                daysOfPayment='30'
-                incoiceDueDate='30'
-                invoiceValue='30'
-                lasyDayToPay='20/01/2024'
-                startDate='01/12/2023'
-                startTermToPay='10/12/2023'
-                key={0}
-              />
-
-              <tr>
-                <td>001</td>
-                <td>Gabriel Ribeiro Siqueira</td>
-                <td>20/12/2032</td>
-                <td>01/01/2024</td>
-                <td>30</td>
-                <td>01/02/2024</td>
-                <td>30</td>
-                <td>30</td>
-                <td>3</td>
-                <td>OK</td>
-              </tr>
+              {productList.map(product => {
+                return (
+                  <Product
+                    key={product.id}
+                    id= {product.id}
+                    date= {formatDate(product.date)}
+                    description={product.description}
+                    month={product.month}
+                    pricePerUnit={product.pricePerUnit}
+                    quantity={product.quantity}
+                    totalValue={product.totalValue}
+                    type={product.type}
+                  />
+                )
+              })}
             </tbody>
           </table>
         </div>
@@ -159,3 +241,5 @@ export function FinancialPage() {
     </>
   )
 }
+
+
