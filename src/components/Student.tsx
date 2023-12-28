@@ -5,11 +5,11 @@ interface StudentProps {
   startTermToPay: string
   daysOfPayment: string
   lasyDayToPay: string
-  incoiceDueDate: string
+  invoiceDueDate: string
   invoiceValue: string
 }
 
-export function Student({ id, name, startDate, startTermToPay, daysOfPayment, lasyDayToPay, invoiceValue, incoiceDueDate }: StudentProps) {
+export function Student({ id, name, startDate, startTermToPay, daysOfPayment, lasyDayToPay, invoiceValue, invoiceDueDate }: StudentProps) {
   return (
     <tr>
       <td>{id}</td>
@@ -18,7 +18,7 @@ export function Student({ id, name, startDate, startTermToPay, daysOfPayment, la
       <td>{startTermToPay}</td>
       <td>{daysOfPayment}</td>
       <td>{lasyDayToPay}</td>
-      <td>{incoiceDueDate}</td>
+      <td>{invoiceDueDate}</td>
       <td>{invoiceValue}</td>
       <td>0</td>
       <td>

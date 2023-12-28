@@ -2,14 +2,58 @@ import { useState } from "react"
 import { Student } from "../../components/Student"
 import "./style.css"
 import { NavLink } from "react-router-dom"
+import { useForm } from "react-hook-form";
+
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  return `${date.getDate().toString().padStart(2, '0')}/${date.getMonth() + 1}/${date.getFullYear()}`;
+}
+
+interface Student {
+  id: string
+  name: string
+  startDate: string
+  startTermToPay: string
+  daysOfPayment: string
+  lasyDayToPay: string
+  invoiceDueDate: string
+  invoiceValue: string
+}
 
 export function StudentPage() {
+  const { register, handleSubmit, reset, control } = useForm<Student>({})
+  const [ studentsList, setStudentsList ] = useState<Student[]>([])
+  const [ countStudentId, setCountStudentId ] = useState(1)
+
   const [ registerStudentModalIsOpen, setRegisterStudentModalIsOpen ] = useState(false)
 
   function cloneModalWithClickInLayer(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     if (e.target instanceof HTMLDivElement && e.target.className === "modal-layer") {
       setRegisterStudentModalIsOpen(false)
     }
+  }
+
+  function handleRegisterNewStudent(data: Student) {
+    const { daysOfPayment, invoiceDueDate, invoiceValue, lasyDayToPay, name, startDate, startTermToPay } = data
+
+    const newStudent: Student = {
+      id: countStudentId.toString(),
+      daysOfPayment,
+      invoiceDueDate, 
+      invoiceValue,
+      lasyDayToPay,
+      name, 
+      startDate,
+      startTermToPay
+    }
+
+    setStudentsList([...studentsList, newStudent])
+
+    setCountStudentId(state => state+=1)
+
+    reset()
+
+    setRegisterStudentModalIsOpen(false)
   }
 
   return(
@@ -25,7 +69,7 @@ export function StudentPage() {
             <button>Cadastrar</button>
             <button onClick={() => setRegisterStudentModalIsOpen(false)}>X</button>
           </header>
-          <form>
+          <form onSubmit={handleSubmit(handleRegisterNewStudent)}>
             <div>
               <label 
                 htmlFor="name">
@@ -33,7 +77,8 @@ export function StudentPage() {
               </label>
               <input 
                 id='name' 
-                type="text" 
+                type="text"
+                {...register("name")} 
               /> 
             </div>
 
@@ -43,7 +88,8 @@ export function StudentPage() {
               </label>
               <input 
                 id='startDate' 
-                type="date" 
+                type="date"
+                {...register("startDate")} 
               />
             </div>
 
@@ -52,8 +98,9 @@ export function StudentPage() {
                 htmlFor="startTermToPay">Início Prazo para Pagar:
               </label>
               <input 
-                id='startTerToPay' 
-                type="date" 
+                id='startTermToPay' 
+                type="date"
+                {...register("startTermToPay")} 
               /> 
             </div>
 
@@ -63,7 +110,8 @@ export function StudentPage() {
               </label>
               <input 
                 id='daysOfPayment' 
-                type="number" 
+                type="number"
+                {...register("daysOfPayment")} 
               /> 
             </div>
 
@@ -73,7 +121,8 @@ export function StudentPage() {
               </label>
               <input 
                 id='lasyDayToPay' 
-                type="date" 
+                type="date"
+                {...register("lasyDayToPay")} 
               /></div> 
 
             <div>
@@ -82,7 +131,8 @@ export function StudentPage() {
               </label>
               <input 
                 id='incoiceDueDate'
-                type="number" 
+                type="number"
+                {...register("invoiceDueDate")} 
               /></div> 
 
             <div>
@@ -91,9 +141,13 @@ export function StudentPage() {
               </label>
               <input 
                 id='invoiceValue' 
-                type="number" 
-              /></div> 
+                type="number"
+                {...register("invoiceValue")} 
+              />
+            </div> 
 
+            <button className="register">Cadastrar</button>
+              
           </form>
         </div>
       </div>
@@ -139,30 +193,21 @@ export function StudentPage() {
               </tr>
             </thead>
             <tbody>
-              <Student
-                id="001"
-                name='Gabriel Ribeiro Siqueira2'
-                daysOfPayment='30'
-                incoiceDueDate='30'
-                invoiceValue='30'
-                lasyDayToPay='20/01/2024'
-                startDate='01/12/2023'
-                startTermToPay='10/12/2023'
-                key={0}
-              />
-
-              <tr>
-                <td>001</td>
-                <td>Gabriel Ribeiro Siqueira</td>
-                <td>20/12/2032</td>
-                <td>01/01/2024</td>
-                <td>30</td>
-                <td>01/02/2024</td>
-                <td>30</td>
-                <td>30</td>
-                <td>3</td>
-                <td>OK</td>
-              </tr>
+              {studentsList.map(student => {
+                return (
+                  <Student
+                    key={student.id}
+                    id={student.id}
+                    name={student.name}
+                    daysOfPayment={student.daysOfPayment}
+                    invoiceDueDate={student.invoiceDueDate}
+                    invoiceValue={student.invoiceValue}
+                    lasyDayToPay={formatDate(student.lasyDayToPay)}
+                    startDate={formatDate(student.startDate)}
+                    startTermToPay={formatDate(student.startTermToPay)}
+                  />
+                )
+              })}
             </tbody>
           </table>
         </div>
