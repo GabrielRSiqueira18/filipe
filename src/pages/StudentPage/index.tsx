@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Student } from "../../components/Student"
 import "./style.css"
+import { NavLink } from "react-router-dom"
 
 export function StudentPage() {
   const [ registerStudentModalIsOpen, setRegisterStudentModalIsOpen ] = useState(false)
@@ -95,7 +96,7 @@ export function StudentPage() {
             <p className='overdue'>Vencido: <span>0</span></p>
           </div>
           <div className='container-total-values-students'>
-            <h2>Total Vbvalores Alunos</h2>
+            <h2>Total Valores Alunos</h2>
             <p>Janeiro</p>
             <p className='money'>R$ 1000.00</p>
           </div>
@@ -105,7 +106,9 @@ export function StudentPage() {
       <div className='students-container'>
         <header className='students-header'>
           <button onClick={() => setRegisterStudentModalIsOpen(true)}>Adicionar Aluno</button>
-          <button>Financeiro</button>
+          <NavLink to={"/financeiro"}>
+            <button>Financeiro</button>
+          </NavLink>
         </header>
 
         <div className='table-container'>
