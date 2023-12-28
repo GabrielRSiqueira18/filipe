@@ -1,5 +1,7 @@
 import { useState } from "react"
 import "./style.css"
+import { NavLink } from "react-router-dom"
+import { Student } from "../../components/Student"
 
 export function FinancialPage() {
   const [ registerStudentModalIsOpen, setRegisterStudentModalIsOpen ] = useState(false)
@@ -88,18 +90,72 @@ export function FinancialPage() {
       <header className='header'>
         <div className='container-header'>
         <div className='container-students-situation'>
-            <h2>Alunos:</h2>
-            <p className='ok'>OK: <span>0</span></p>
-            <p className='renew'>Renovar: <span>0</span></p>
-            <p className='overdue'>Vencido: <span>0</span></p>
+            <h2>Produtos:</h2>
+            <p className='ok'>Entrada: <span>0</span></p>
+            <p className='overdue'>Saída: <span>0</span></p>
+            <p>Total Valor: <span>1000</span></p>
           </div>
           <div className='container-total-values-students'>
-            <h2>Total Valores Alunos</h2>
+            <h2>Total Valores Produtos</h2>
             <p>Janeiro</p>
             <p className='money'>R$ 1000.00</p>
           </div>
         </div>
       </header>
+
+      <div className='students-container'>
+        <header className='students-header'>
+          <button onClick={() => setRegisterStudentModalIsOpen(true)}>Adicionar Produto</button>
+          <NavLink to={"/"}>
+            <button>Alunos</button>
+          </NavLink>
+        </header>
+
+        <div className='table-container'>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Aluno</th>
+                <th>Data Início</th>
+                <th>Prazo p/ Pagar</th>
+                <th>Prazo Dias</th>
+                <th>Fim Prazo</th>
+                <th>Dias a Vencer</th>
+                <th>Valor</th>
+                <th>Faturas Pagas</th>
+                <th>Situação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <Student
+                id="001"
+                name='Gabriel Ribeiro Siqueira2'
+                daysOfPayment='30'
+                incoiceDueDate='30'
+                invoiceValue='30'
+                lasyDayToPay='20/01/2024'
+                startDate='01/12/2023'
+                startTermToPay='10/12/2023'
+                key={0}
+              />
+
+              <tr>
+                <td>001</td>
+                <td>Gabriel Ribeiro Siqueira</td>
+                <td>20/12/2032</td>
+                <td>01/01/2024</td>
+                <td>30</td>
+                <td>01/02/2024</td>
+                <td>30</td>
+                <td>30</td>
+                <td>3</td>
+                <td>OK</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </>
   )
 }
