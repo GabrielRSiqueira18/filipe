@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Student } from "../../components/Student"
 import "./style.css"
 import { NavLink } from "react-router-dom"
 import { useForm } from "react-hook-form";
+import { StudentService } from "../../api/services/students";
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
@@ -10,7 +11,7 @@ function formatDate(dateString: string): string {
 }
 
 interface Student {
-  id: string
+  id: number
   name: string
   startDate: string
   startTermToPay: string
@@ -23,7 +24,6 @@ interface Student {
 export function StudentPage() {
   const { register, handleSubmit, reset, control } = useForm<Student>({})
   const [ studentsList, setStudentsList ] = useState<Student[]>([])
-  const [ countStudentId, setCountStudentId ] = useState(1)
 
   const [ registerStudentModalIsOpen, setRegisterStudentModalIsOpen ] = useState(false)
 
@@ -36,8 +36,7 @@ export function StudentPage() {
   function handleRegisterNewStudent(data: Student) {
     const { daysOfPayment, invoiceDueDate, invoiceValue, lasyDayToPay, name, startDate, startTermToPay } = data
 
-    const newStudent: Student = {
-      id: countStudentId.toString(),
+    const newStudent: Omit<Student, "id"> = {
       daysOfPayment,
       invoiceDueDate, 
       invoiceValue,
@@ -47,14 +46,22 @@ export function StudentPage() {
       startTermToPay
     }
 
-    setStudentsList([...studentsList, newStudent])
-
-    setCountStudentId(state => state+=1)
+    StudentService.create(newStudent)
+      .then(result => {
+        setStudentsList(state => [...state, result])
+      })
 
     reset()
 
     setRegisterStudentModalIsOpen(false)
   }
+
+  useEffect(() => {
+    StudentService.getAll()
+      .then((products) => {
+        setStudentsList(products)
+      })
+  }, [])
 
   return(
     <>

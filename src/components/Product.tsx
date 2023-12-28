@@ -1,4 +1,4 @@
-interface StudentProps {
+interface ProductProps {
     id: string
     date: string
     description: string
@@ -9,7 +9,7 @@ interface StudentProps {
     type: "Entrada" | "Saída"
   }
   
-  export function Product({ id, date, description, quantity, pricePerUnit, totalValue, type, month }: StudentProps) {
+  export function Product({ id, date, description, quantity, pricePerUnit, totalValue, type, month }: ProductProps) {
     return (
       <tr>
         <td>{id}</td>

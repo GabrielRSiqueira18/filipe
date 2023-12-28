@@ -1,10 +1,9 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "./style.css"
 import { NavLink } from "react-router-dom"
 import { Product } from "../../components/Product"
-import * as z from "zod"
 import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod";
+import { ProductsService } from "../../api/services/product"
 
 interface Product {
   id: string
@@ -24,13 +23,11 @@ function formatDate(dateString: string): string {
 }
 
 export function FinancialPage() {
-  const { register, handleSubmit, reset, control } = useForm<Product>({})
+  const { register, handleSubmit, reset } = useForm<Product>({})
 
   const [ registerStudentModalIsOpen, setRegisterStudentModalIsOpen ] = useState(false)
 
   const [ productList, setProductList ] = useState<Product[]>([])
-
-  const [ countProductId, setCountProductId ] = useState(1)
 
   function cloneModalWithClickInLayer(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     if (e.target instanceof HTMLDivElement && e.target.className === "modal-layer") {
@@ -39,27 +36,34 @@ export function FinancialPage() {
   }
 
   function handleRegisterNewProduct(data: Product) {
-    const { date, description, month, pricePerUnit, quantity, totalValue, type } = data
+    const { date, description, month, pricePerUnit, quantity, type } = data
 
-    const newProduct: Product = {
+    const newProduct: Omit<Product, "id"> = {
       date,
       description,
-      id: countProductId.toString(),
       month,
       pricePerUnit,
       quantity,
-      totalValue,
+      totalValue: pricePerUnit * quantity,
       type
     }
 
-    setProductList([...productList, newProduct])
-
-    setCountProductId(state => state+=1)
-
+    ProductsService.create(newProduct)
+      .then(result => {
+        setProductList(state => [...state, result])
+      })
+      
     reset()
 
     setRegisterStudentModalIsOpen(false )
   }
+
+  useEffect(() => {
+    ProductsService.getAll()
+      .then((products) => {
+        setProductList(products)
+      })
+  }, [])
 
   return(
     <>
@@ -116,6 +120,7 @@ export function FinancialPage() {
               </label>
               <input 
                 id='quantity' 
+                step={1}
                 type="number" 
                 {...register("quantity")}
                 required
@@ -132,19 +137,8 @@ export function FinancialPage() {
                 id='pricePerUnit' 
                 type="number" 
                 {...register("pricePerUnit")}
+                step="0.01"
                 required
-              />
-            </div> 
-
-            <div>
-              <label 
-                htmlFor="totalValue">Valor Total
-              </label>
-              <input 
-                id='totalValue'
-                type="number"
-                {...register("totalValue")}
-                required 
               />
             </div> 
 

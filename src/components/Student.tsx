@@ -1,5 +1,5 @@
 interface StudentProps {
-  id: string
+  id: number
   name: string
   startDate: string
   startTermToPay: string
