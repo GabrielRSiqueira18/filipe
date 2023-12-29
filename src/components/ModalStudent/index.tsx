@@ -18,7 +18,7 @@ interface ModalProps {
   setStudentsList: (value: React.SetStateAction<Student[]>) => void
 }
 
-export function Modal({ modalIsOpen, setRegisterStudentModalIsOpen, setStudentsList }: ModalProps) {
+export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setStudentsList }: ModalProps) {
   const { register, handleSubmit, reset, control } = useForm<Student>({})
 
   function closeModalWithClickInLayer(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {

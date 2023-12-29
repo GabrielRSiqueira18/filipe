@@ -47,8 +47,9 @@ export function ModalFinancial({ registerProductModalIsOpen, setRegisterProductM
         setProductList(state => [...state, result])
       })
       
+      //reset()
 
-    // setRegisterStudentModalIsOpen(false )
+    // setRegisterStudentModalIsOpen(false)
   }
 
   return (
@@ -77,16 +78,6 @@ export function ModalFinancial({ registerProductModalIsOpen, setRegisterProductM
               /> 
             </div>
 
-            {/* <div>
-              <label 
-                htmlFor="startDate">Data do Início do Aluno:
-              </label>
-              <input 
-                id='startDate' 
-                type="date" 
-              />
-            </div> */}
-
             <div>
               <label 
                 htmlFor="description">Descrição
@@ -111,9 +102,7 @@ export function ModalFinancial({ registerProductModalIsOpen, setRegisterProductM
                 required
               /> 
             </div>
-
             
-
             <div>
               <label 
                 htmlFor="pricePerUnit">Valor Unitário

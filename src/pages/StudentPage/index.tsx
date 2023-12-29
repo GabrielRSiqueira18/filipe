@@ -5,7 +5,7 @@ import { Student } from "../../components/Student"
 import { NavLink } from "react-router-dom"
 import { StudentService } from "../../api/services/students";
 import ReactPaginate from "react-paginate";
-import { Modal } from "../../components/ModalStudent";
+import { ModalStudent } from "../../components/ModalStudent";
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
@@ -21,6 +21,10 @@ interface Student {
   lasyDayToPay: string
   invoiceDueDate: string
   invoiceValue: string
+}
+
+interface ReactPaginateOnPageChangeEvent {
+  selected: number
 }
 
 export function StudentPage() {
@@ -59,13 +63,13 @@ export function StudentPage() {
   //Pagination
   const pageCount = Math.ceil(studentsList.length / productPerPage)
 
-  function changePage(event: any) {
+  function changePage(event: ReactPaginateOnPageChangeEvent) {
     setPageNumber(event.selected)
   }
 
   return(
     <>
-      <Modal
+      <ModalStudent
         modalIsOpen={registerStudentModalIsOpen }
         setRegisterStudentModalIsOpen={setRegisterStudentModalIsOpen}
         setStudentsList={setStudentsList}

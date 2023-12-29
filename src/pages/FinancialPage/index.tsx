@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
 import "./style.css"
+
+import { useEffect, useState } from "react"
 import { NavLink } from "react-router-dom"
 import { Product } from "../../components/Product"
-import { useForm } from "react-hook-form"
 import { ProductsService } from "../../api/services/product"
 import ReactPaginate from "react-paginate"
 import { ModalFinancial } from "../../components/ModalFinancial"
@@ -16,7 +16,10 @@ interface Product {
   quantity: number
   totalValue: number
   type: "Entrada" | "Saída"
+}
 
+interface ReactPaginateOnPageChangeEvent {
+  selected: number
 }
 
 function formatDate(dateString: string): string {
@@ -63,7 +66,7 @@ export function FinancialPage() {
 
   const pageCount = Math.ceil(productList.length / productPerPage)
 
-  function changePage(event: any) {
+  function changePage(event: ReactPaginateOnPageChangeEvent) {
     setPageNumber(event.selected)
   }
 
