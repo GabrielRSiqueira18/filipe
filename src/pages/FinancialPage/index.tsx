@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom"
 import { Product } from "../../components/Product"
 import { useForm } from "react-hook-form"
 import { ProductsService } from "../../api/services/product"
+import ReactPaginate from "react-paginate"
 
 interface Product {
   id: string
@@ -29,6 +30,27 @@ export function FinancialPage() {
 
   const [ productList, setProductList ] = useState<Product[]>([])
 
+  const [ pageNumber, setPageNumber ] = useState(0)
+  const productPerPage = 10
+  const pageVisited = pageNumber * productPerPage
+
+  const displayProducts = productList.slice(pageVisited, pageVisited + productPerPage).map(product => {
+    return (
+      <Product
+        key={product.id}
+        id= {product.id}
+        date= {formatDate(product.date)}
+        description={product.description}
+        month={product.month}
+        pricePerUnit={product.pricePerUnit}
+        quantity={product.quantity}
+        totalValue={product.totalValue}
+        type={product.type}
+      />
+    )
+  })
+
+
   function cloneModalWithClickInLayer(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     if (e.target instanceof HTMLDivElement && e.target.className === "modal-layer") {
       setRegisterStudentModalIsOpen(false)
@@ -53,9 +75,8 @@ export function FinancialPage() {
         setProductList(state => [...state, result])
       })
       
-    reset()
 
-    setRegisterStudentModalIsOpen(false )
+    // setRegisterStudentModalIsOpen(false )
   }
 
   useEffect(() => {
@@ -64,6 +85,13 @@ export function FinancialPage() {
         setProductList(products)
       })
   }, [])
+
+  const pageCount = Math.ceil(productList.length / productPerPage)
+
+  function changePage(event: any) {
+    setPageNumber(event.selected)
+  }
+
 
   return(
     <>
@@ -183,13 +211,13 @@ export function FinancialPage() {
             <button>Alunos</button>
           </NavLink>
         </header>
-        <form>
-          <div>
+        <form className="form-filter">
+          <div className="input-container">
             <input type="text" placeholder="Pesquise por um produto" />
             <button>Pesquisar</button>
           </div>
 
-          <div>
+          <div className="button-container">
             <button type="button">A-Z</button>
             <button type="button">Faturas paga maior e menor </button>
             <button type="button">Situação</button>
@@ -213,23 +241,15 @@ export function FinancialPage() {
               </tr>
             </thead>
             <tbody>
-              {productList.map(product => {
-                return (
-                  <Product
-                    key={product.id}
-                    id= {product.id}
-                    date= {formatDate(product.date)}
-                    description={product.description}
-                    month={product.month}
-                    pricePerUnit={product.pricePerUnit}
-                    quantity={product.quantity}
-                    totalValue={product.totalValue}
-                    type={product.type}
-                  />
-                )
-              })}
+              {displayProducts}
             </tbody>
           </table>
+          <ReactPaginate
+            previousLabel="Previous"
+            nextLabel="Next"
+            pageCount={pageCount}
+            onPageChange={changePage}
+          />
         </div>
       </div>
     </>
