@@ -1,9 +1,11 @@
+import "./style.css"
+
 import { useEffect, useState } from "react"
 import { Student } from "../../components/Student"
-import "./style.css"
 import { NavLink } from "react-router-dom"
-import { useForm } from "react-hook-form";
 import { StudentService } from "../../api/services/students";
+import ReactPaginate from "react-paginate";
+import { Modal } from "../../components/ModalStudent";
 
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
@@ -22,142 +24,52 @@ interface Student {
 }
 
 export function StudentPage() {
-  const { register, handleSubmit, reset, control } = useForm<Student>({})
   const [ studentsList, setStudentsList ] = useState<Student[]>([])
-
   const [ registerStudentModalIsOpen, setRegisterStudentModalIsOpen ] = useState(false)
 
-  function cloneModalWithClickInLayer(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    if (e.target instanceof HTMLDivElement && e.target.className === "modal-layer") {
-      setRegisterStudentModalIsOpen(false)
-    }
-  }
+  const [ pageNumber, setPageNumber ] = useState(0)
+  const productPerPage = 10
+  const pageVisited = pageNumber * productPerPage
 
-  function handleRegisterNewStudent(data: Student) {
-    const { daysOfPayment, invoiceDueDate, invoiceValue, lasyDayToPay, name, startDate, startTermToPay } = data
+  //Display students in pagination
+  const displayStudents = studentsList.slice(pageVisited, pageVisited + productPerPage).map(student => {
+    return (
+      <Student
+        key={student.id}
+        id={student.id}
+        name={student.name}
+        daysOfPayment={student.daysOfPayment}
+        invoiceDueDate={student.invoiceDueDate}
+        invoiceValue={student.invoiceValue}
+        lasyDayToPay={formatDate(student.lasyDayToPay)}
+        startDate={formatDate(student.startDate)}
+        startTermToPay={formatDate(student.startTermToPay)}
+      />
+    )
+  })
 
-    const newStudent: Omit<Student, "id"> = {
-      daysOfPayment,
-      invoiceDueDate, 
-      invoiceValue,
-      lasyDayToPay,
-      name, 
-      startDate,
-      startTermToPay
-    }
-
-    StudentService.create(newStudent)
-      .then(result => {
-        setStudentsList(state => [...state, result])
-      })
-
-    reset()
-
-    setRegisterStudentModalIsOpen(false)
-  }
-
+  //Get students data in db server
   useEffect(() => {
     StudentService.getAll()
       .then((products) => {
         setStudentsList(products)
       })
   }, [])
+  
+  //Pagination
+  const pageCount = Math.ceil(studentsList.length / productPerPage)
+
+  function changePage(event: any) {
+    setPageNumber(event.selected)
+  }
 
   return(
     <>
-      <div 
-        onClick={(e) => cloneModalWithClickInLayer(e)}
-        className={registerStudentModalIsOpen ? `modal-layer` : "none"}
-      >
-        <div 
-          className={registerStudentModalIsOpen ? `modal` : "none"}
-        >
-          <header>
-            <button>Cadastrar</button>
-            <button onClick={() => setRegisterStudentModalIsOpen(false)}>X</button>
-          </header>
-          <form onSubmit={handleSubmit(handleRegisterNewStudent)}>
-            <div>
-              <label 
-                htmlFor="name">
-                  Nome do Aluno:
-              </label>
-              <input 
-                id='name' 
-                type="text"
-                {...register("name")} 
-              /> 
-            </div>
-
-            <div>
-              <label 
-                htmlFor="startDate">Data do Início do Aluno:
-              </label>
-              <input 
-                id='startDate' 
-                type="date"
-                {...register("startDate")} 
-              />
-            </div>
-
-            <div>
-              <label 
-                htmlFor="startTermToPay">Início Prazo para Pagar:
-              </label>
-              <input 
-                id='startTermToPay' 
-                type="date"
-                {...register("startTermToPay")} 
-              /> 
-            </div>
-
-            <div>
-              <label 
-                htmlFor="daysOfPayment">Prazo dias do Pagamento:
-              </label>
-              <input 
-                id='daysOfPayment' 
-                type="number"
-                {...register("daysOfPayment")} 
-              /> 
-            </div>
-
-            <div>
-              <label 
-                htmlFor="lasyDayToPay">Fim Prazo para Pagar:
-              </label>
-              <input 
-                id='lasyDayToPay' 
-                type="date"
-                {...register("lasyDayToPay")} 
-              /></div> 
-
-            <div>
-              <label 
-                htmlFor="incoiceDueDate">Dias para Vencer Fatura:
-              </label>
-              <input 
-                id='incoiceDueDate'
-                type="number"
-                {...register("invoiceDueDate")} 
-              /></div> 
-
-            <div>
-              <label 
-                htmlFor="invoiceValue">Valor Fatura:
-              </label>
-              <input 
-                id='invoiceValue' 
-                type="number"
-                {...register("invoiceValue")} 
-              />
-            </div> 
-
-            <button className="register">Cadastrar</button>
-              
-          </form>
-        </div>
-      </div>
+      <Modal
+        modalIsOpen={registerStudentModalIsOpen }
+        setRegisterStudentModalIsOpen={setRegisterStudentModalIsOpen}
+        setStudentsList={setStudentsList}
+      />
 
       <header className='header'>
         <div className='container-header'>
@@ -181,7 +93,20 @@ export function StudentPage() {
           <NavLink to={"/financeiro"}>
             <button>Financeiro</button>
           </NavLink>
+          
         </header>
+        <form className="form-filter">
+          <div className="input-container">
+            <input type="text" placeholder="Pesquise por um produto" />
+            <button>Pesquisar</button>
+          </div>
+
+          <div className="button-container">
+            <button type="button">A-Z</button>
+            <button type="button">Faturas paga maior e menor </button>
+            <button type="button">Situação</button>
+          </div>
+        </form>
 
         <div className='table-container'>
           <table>
@@ -200,23 +125,16 @@ export function StudentPage() {
               </tr>
             </thead>
             <tbody>
-              {studentsList.map(student => {
-                return (
-                  <Student
-                    key={student.id}
-                    id={student.id}
-                    name={student.name}
-                    daysOfPayment={student.daysOfPayment}
-                    invoiceDueDate={student.invoiceDueDate}
-                    invoiceValue={student.invoiceValue}
-                    lasyDayToPay={formatDate(student.lasyDayToPay)}
-                    startDate={formatDate(student.startDate)}
-                    startTermToPay={formatDate(student.startTermToPay)}
-                  />
-                )
-              })}
+              {displayStudents}
             </tbody>
           </table>
+
+          <ReactPaginate
+            previousLabel="Previous"
+            nextLabel="Next"
+            pageCount={pageCount}
+            onPageChange={changePage}
+          />
         </div>
       </div>
     </>

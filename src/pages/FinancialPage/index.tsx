@@ -5,6 +5,7 @@ import { Product } from "../../components/Product"
 import { useForm } from "react-hook-form"
 import { ProductsService } from "../../api/services/product"
 import ReactPaginate from "react-paginate"
+import { ModalFinancial } from "../../components/ModalFinancial"
 
 interface Product {
   id: string
@@ -24,9 +25,7 @@ function formatDate(dateString: string): string {
 }
 
 export function FinancialPage() {
-  const { register, handleSubmit, reset } = useForm<Product>({})
-
-  const [ registerStudentModalIsOpen, setRegisterStudentModalIsOpen ] = useState(false)
+  const [ registerProductModalIsOpen, setRegisterProductModalIsOpen ] = useState(false)
 
   const [ productList, setProductList ] = useState<Product[]>([])
 
@@ -51,33 +50,9 @@ export function FinancialPage() {
   })
 
 
-  function cloneModalWithClickInLayer(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    if (e.target instanceof HTMLDivElement && e.target.className === "modal-layer") {
-      setRegisterStudentModalIsOpen(false)
-    }
-  }
+  
 
-  function handleRegisterNewProduct(data: Product) {
-    const { date, description, month, pricePerUnit, quantity, type } = data
-
-    const newProduct: Omit<Product, "id"> = {
-      date,
-      description,
-      month,
-      pricePerUnit,
-      quantity,
-      totalValue: pricePerUnit * quantity,
-      type
-    }
-
-    ProductsService.create(newProduct)
-      .then(result => {
-        setProductList(state => [...state, result])
-      })
-      
-
-    // setRegisterStudentModalIsOpen(false )
-  }
+  
 
   useEffect(() => {
     ProductsService.getAll()
@@ -95,98 +70,11 @@ export function FinancialPage() {
 
   return(
     <>
-      <div 
-        onClick={(e) => cloneModalWithClickInLayer(e)}
-        className={registerStudentModalIsOpen ? `modal-layer` : "none"}
-      >
-        <div 
-          className={registerStudentModalIsOpen ? `modal` : "none"}
-        >
-          <header>
-            <button>Cadastrar</button>
-            <button onClick={() => setRegisterStudentModalIsOpen(false)}>X</button>
-          </header>
-          <form onSubmit={handleSubmit(handleRegisterNewProduct)}>
-            <div>
-              <label 
-                htmlFor="date">
-                  Data:
-              </label>
-              <input 
-                id='date' 
-                type="date" 
-                {...register("date")}
-                required
-              /> 
-            </div>
-
-            {/* <div>
-              <label 
-                htmlFor="startDate">Data do Início do Aluno:
-              </label>
-              <input 
-                id='startDate' 
-                type="date" 
-              />
-            </div> */}
-
-            <div>
-              <label 
-                htmlFor="description">Descrição
-              </label>
-              <input 
-                id='description' 
-                type="text" 
-                {...register("description")}
-                required
-              /> 
-            </div>
-
-            <div>
-              <label 
-                htmlFor="quantity">Quantidade:
-              </label>
-              <input 
-                id='quantity' 
-                step={1}
-                type="number" 
-                {...register("quantity")}
-                required
-              /> 
-            </div>
-
-            
-
-            <div>
-              <label 
-                htmlFor="pricePerUnit">Valor Unitário
-              </label>
-              <input 
-                id='pricePerUnit' 
-                type="number" 
-                {...register("pricePerUnit")}
-                step="0.01"
-                required
-              />
-            </div> 
-
-            <div>
-              <label 
-                htmlFor="type">Tipo
-              </label>
-              <input 
-                id='type' 
-                type="text"
-                {...register("type")} 
-                required
-              />
-            </div> 
-            <button className="register">
-              Cadastrar
-            </button>
-          </form>
-        </div>
-      </div>
+      <ModalFinancial
+        registerProductModalIsOpen={registerProductModalIsOpen}
+        setRegisterProductModalIsOpen={setRegisterProductModalIsOpen}
+        setProductList={setProductList}
+      />
 
       <header className='header'>
         <div className='container-header'>
@@ -206,7 +94,7 @@ export function FinancialPage() {
 
       <div className='students-container'>
         <header className='students-header'>
-          <button onClick={() => setRegisterStudentModalIsOpen(true)}>Adicionar Produto</button>
+          <button onClick={() => setRegisterProductModalIsOpen(true)}>Adicionar Produto</button>
           <NavLink to={"/"}>
             <button>Alunos</button>
           </NavLink>
