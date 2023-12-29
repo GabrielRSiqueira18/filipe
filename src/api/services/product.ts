@@ -17,8 +17,17 @@ async function getAll(): Promise<Product[]> {
   const { data } = await apiInstance.get("/products")
 
   return data
-
 }
+
+async function getByDescription(value: string): Promise<Product[]> {
+  const apiInstance = await Api()
+
+  const { data } = await apiInstance.get(`/products/?description_like=${value}`)
+  console.log(data)
+
+  return data
+}
+
 async function create(dataCreate: Omit<Product, "id">): Promise<Product> {
   const apiInstance = await Api()
 
@@ -29,5 +38,6 @@ async function create(dataCreate: Omit<Product, "id">): Promise<Product> {
 
 export const ProductsService = {
   getAll,
+  getByDescription,
   create
 }

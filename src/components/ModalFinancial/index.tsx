@@ -34,7 +34,7 @@ export function ModalFinancial({ registerProductModalIsOpen, setRegisterProductM
 
     const newProduct: Omit<Product, "id"> = {
       date,
-      description,
+      description: description.toLowerCase(),
       month,
       pricePerUnit,
       quantity,
@@ -52,13 +52,15 @@ export function ModalFinancial({ registerProductModalIsOpen, setRegisterProductM
     // setRegisterStudentModalIsOpen(false)
   }
 
+ 
+
   return (
     <div 
         onClick={(e) => closeModalWithClickInLayer(e)}
         className={registerProductModalIsOpen ? `modal-layer` : "none"}
       >
         <div 
-          className={registerProductModalIsOpen ? `modal` : "none"}
+          className={registerProductModalIsOpen ? `modal-financial` : "none"}
         >
           <header>
             <button>Cadastrar</button>

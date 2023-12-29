@@ -4,12 +4,13 @@ interface StudentProps {
   startDate: string
   startTermToPay: string
   daysOfPayment: string
-  lasyDayToPay: string
   invoiceDueDate: string
   invoiceValue: string
+  invoicesPayeds: string
+  situation: string
 }
 
-export function Student({ id, name, startDate, startTermToPay, daysOfPayment, lasyDayToPay, invoiceValue, invoiceDueDate }: StudentProps) {
+export function Student({ id, name, startDate, startTermToPay, daysOfPayment, invoiceValue, invoiceDueDate, invoicesPayeds, situation }: StudentProps) {
   return (
     <tr>
       <td>{id}</td>
@@ -17,12 +18,12 @@ export function Student({ id, name, startDate, startTermToPay, daysOfPayment, la
       <td>{startDate}</td>
       <td>{startTermToPay}</td>
       <td>{daysOfPayment}</td>
-      <td>{lasyDayToPay}</td>
+      <td>{"20/10/2000"}</td>
       <td>{invoiceDueDate}</td>
       <td>{invoiceValue}</td>
-      <td>0</td>
+      <td>{invoicesPayeds}</td>
       <td>
-        <button>Vencida</button>
+        <button>{situation}</button>
       </td>
     </tr>
 )

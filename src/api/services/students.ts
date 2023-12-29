@@ -6,10 +6,12 @@ interface Student {
   startDate: string
   startTermToPay: string
   daysOfPayment: string
-  lasyDayToPay: string
+  invoicePayeds: string
   invoiceDueDate: string
   invoiceValue: string
-  }
+  situation: string
+
+}
 
 async function getAll(): Promise<Student[]> {
   const apiInstance = await Api()
@@ -17,8 +19,16 @@ async function getAll(): Promise<Student[]> {
   const { data } = await apiInstance.get("/students")
 
   return data
-
 }
+
+async function getByName(value: string): Promise<Student[]> {
+  const apiInstance = await Api()
+
+  const { data } = await apiInstance.get(`/students/?name_like=${value}`)
+
+  return data
+}
+
 async function create(dataCreate: Omit<Student, "id">): Promise<Student> {
   const apiInstance = await Api()
 
@@ -29,5 +39,6 @@ async function create(dataCreate: Omit<Student, "id">): Promise<Student> {
 
 export const StudentService = {
   getAll,
+  getByName,
   create
 }

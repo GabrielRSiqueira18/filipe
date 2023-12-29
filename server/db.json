@@ -1,645 +1,99 @@
 {
   "students": [
     {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
+      "daysOfPayment": "",
+      "invoiceDueDate": "",
+      "invoiceValue": "",
+      "invoicePayeds": "",
+      "name": "gabriel",
+      "startDate": "",
+      "startTermToPay": "",
+      "situation": "Ok",
       "id": 1
     },
     {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
+      "daysOfPayment": "",
+      "invoiceDueDate": "",
+      "invoiceValue": "",
+      "invoicePayeds": "",
+      "name": "pedro",
+      "startDate": "",
+      "startTermToPay": "",
+      "situation": "Renovar",
       "id": 2
     },
     {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
+      "daysOfPayment": "",
+      "invoiceDueDate": "",
       "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
+      "invoicePayeds": "3",
+      "name": "gabriel",
+      "startDate": "",
+      "startTermToPay": "",
+      "situation": "",
       "id": 3
     },
     {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
+      "daysOfPayment": "",
+      "invoiceDueDate": "",
+      "invoiceValue": "4",
+      "invoicePayeds": "3",
+      "name": "gabriel",
+      "startDate": "",
+      "startTermToPay": "",
+      "situation": "",
       "id": 4
     },
     {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
+      "daysOfPayment": "",
+      "invoiceDueDate": "",
+      "invoiceValue": "4",
+      "invoicePayeds": "3",
+      "name": "gabriel",
+      "startDate": "",
+      "startTermToPay": "",
+      "situation": "",
       "id": 5
     },
     {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
+      "daysOfPayment": "",
+      "invoiceDueDate": "",
+      "invoiceValue": "5",
+      "invoicePayeds": "1",
+      "name": "gabriel",
+      "startDate": "",
+      "startTermToPay": "",
+      "situation": "",
       "id": 6
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 7
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 8
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 9
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 10
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 11
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 12
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 13
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 14
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 15
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 16
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 17
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 18
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 19
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 20
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 21
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 22
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 23
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 24
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 25
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 26
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 27
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 28
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 29
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 30
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "2",
-      "lasyDayToPay": "2023-12-05",
-      "name": "Gabriel",
-      "startDate": "2023-12-06",
-      "startTermToPay": "2023-12-05",
-      "id": 31
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "1",
-      "lasyDayToPay": "2023-12-14",
-      "name": "Gabriel2",
-      "startDate": "2023-11-29",
-      "startTermToPay": "2023-11-29",
-      "id": 32
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "1",
-      "lasyDayToPay": "2023-12-14",
-      "name": "Gabriel2",
-      "startDate": "2023-11-29",
-      "startTermToPay": "2023-11-29",
-      "id": 33
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "1",
-      "lasyDayToPay": "2023-12-14",
-      "name": "Gabriel2",
-      "startDate": "2023-11-29",
-      "startTermToPay": "2023-11-29",
-      "id": 34
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "1",
-      "lasyDayToPay": "2023-12-14",
-      "name": "Gabriel2",
-      "startDate": "2023-11-29",
-      "startTermToPay": "2023-11-29",
-      "id": 35
-    },
-    {
-      "daysOfPayment": "1",
-      "invoiceDueDate": "1",
-      "invoiceValue": "1",
-      "lasyDayToPay": "2023-12-14",
-      "name": "Gabriel2",
-      "startDate": "2023-11-29",
-      "startTermToPay": "2023-11-29",
-      "id": 36
     }
   ],
   "products": [
     {
-      "date": "2023-11-27",
-      "description": "Gabriel",
-      "pricePerUnit": "2",
-      "quantity": "2",
-      "totalValue": 4,
+      "date": "2023-12-21",
+      "description": "gabriel",
+      "pricePerUnit": "1",
+      "quantity": "1",
+      "totalValue": 1,
       "type": "Saída",
       "id": 1
     },
     {
-      "date": "2023-11-27",
-      "description": "Gabriel",
-      "pricePerUnit": "2",
-      "quantity": "2",
-      "totalValue": 4,
+      "date": "2023-12-21",
+      "description": "pedro",
+      "pricePerUnit": "1",
+      "quantity": "1",
+      "totalValue": 1,
       "type": "Saída",
       "id": 2
     },
     {
-      "date": "2023-11-27",
-      "description": "Gabriel",
+      "date": "2023-12-13",
+      "description": "pedro joaquim",
       "pricePerUnit": "2",
       "quantity": "2",
       "totalValue": 4,
       "type": "Saída",
       "id": 3
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 4
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 5
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 6
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 7
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 8
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 9
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 10
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 11
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 12
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 13
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 14
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 15
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 16
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 17
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 18
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 19
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 20
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 21
-    },
-    {
-      "date": "2023-12-14",
-      "description": "Gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
-      "type": "Saída",
-      "id": 22
-    },
-    {
-      "date": "2023-12-19",
-      "description": "Gabriel",
-      "pricePerUnit": "2",
-      "quantity": "1",
-      "totalValue": 2,
-      "type": "Saída",
-      "id": 23
-    },
-    {
-      "date": "2023-12-19",
-      "description": "Gabriel",
-      "pricePerUnit": "2",
-      "quantity": "1",
-      "totalValue": 2,
-      "type": "Saída",
-      "id": 24
-    },
-    {
-      "date": "2023-12-19",
-      "description": "Gabriel",
-      "pricePerUnit": "2",
-      "quantity": "1",
-      "totalValue": 2,
-      "type": "Saída",
-      "id": 25
-    },
-    {
-      "date": "2023-12-19",
-      "description": "Gabriel",
-      "pricePerUnit": "2",
-      "quantity": "1",
-      "totalValue": 2,
-      "type": "Saída",
-      "id": 26
-    },
-    {
-      "date": "2023-12-19",
-      "description": "Gabriel",
-      "pricePerUnit": "2",
-      "quantity": "1",
-      "totalValue": 2,
-      "type": "Saída",
-      "id": 27
-    },
-    {
-      "date": "2023-12-13",
-      "description": "Gabriel2024",
-      "pricePerUnit": "2",
-      "quantity": "1",
-      "totalValue": 2,
-      "type": "Saída",
-      "id": 28
-    },
-    {
-      "date": "2023-12-13",
-      "description": "Gabriel2024",
-      "pricePerUnit": "2",
-      "quantity": "1",
-      "totalValue": 2,
-      "type": "Saída",
-      "id": 29
-    },
-    {
-      "date": "2023-12-13",
-      "description": "Gabriel2024",
-      "pricePerUnit": "2",
-      "quantity": "1",
-      "totalValue": 2,
-      "type": "Saída",
-      "id": 30
-    },
-    {
-      "date": "2023-12-13",
-      "description": "Gabriel2024",
-      "pricePerUnit": "2",
-      "quantity": "1",
-      "totalValue": 2,
-      "type": "Saída",
-      "id": 31
     }
   ]
 }

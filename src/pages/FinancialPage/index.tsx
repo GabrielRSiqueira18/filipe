@@ -6,6 +6,7 @@ import { Product } from "../../components/Product"
 import { ProductsService } from "../../api/services/product"
 import ReactPaginate from "react-paginate"
 import { ModalFinancial } from "../../components/ModalFinancial"
+import { useForm } from "react-hook-form"
 
 interface Product {
   id: string
@@ -22,12 +23,18 @@ interface ReactPaginateOnPageChangeEvent {
   selected: number
 }
 
+interface StudentQuerySearch {
+  value: string
+}
+
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
   return `${date.getDate().toString().padStart(2, '0')}/${date.getMonth() + 1}/${date.getFullYear()}`;
 }
 
 export function FinancialPage() {
+  const { register, handleSubmit, reset } = useForm<StudentQuerySearch>({})
+
   const [ registerProductModalIsOpen, setRegisterProductModalIsOpen ] = useState(false)
 
   const [ productList, setProductList ] = useState<Product[]>([])
@@ -42,7 +49,7 @@ export function FinancialPage() {
         key={product.id}
         id= {product.id}
         date= {formatDate(product.date)}
-        description={product.description}
+        description={product.description.toUpperCase()}
         month={product.month}
         pricePerUnit={product.pricePerUnit}
         quantity={product.quantity}
@@ -54,7 +61,11 @@ export function FinancialPage() {
 
 
   
-
+ //Query Search By Name
+ async function handleSubmitSearchByDescription({ value }: StudentQuerySearch) {
+  ProductsService.getByDescription(value.toLowerCase())
+    .then(product => setProductList(product))
+}
   
 
   useEffect(() => {
@@ -102,9 +113,13 @@ export function FinancialPage() {
             <button>Alunos</button>
           </NavLink>
         </header>
-        <form className="form-filter">
+        <form onSubmit={handleSubmit(handleSubmitSearchByDescription)} className="form-filter">
           <div className="input-container">
-            <input type="text" placeholder="Pesquise por um produto" />
+            <input 
+              type="text" 
+              placeholder="Pesquise por um produto" 
+              {...register("value")}
+            />
             <button>Pesquisar</button>
           </div>
 
@@ -140,6 +155,11 @@ export function FinancialPage() {
             nextLabel="Next"
             pageCount={pageCount}
             onPageChange={changePage}
+            containerClassName={"pagination-container"}
+            previousLinkClassName={"previousBttn"}
+            nextLinkClassName={"nextBttn"}
+            disabledClassName={"paginationDisabled"}
+            activeClassName={"paginationActive"}
           />
         </div>
       </div>

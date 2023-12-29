@@ -7,18 +7,20 @@ interface Student {
   startDate: string
   startTermToPay: string
   daysOfPayment: string
-  lasyDayToPay: string
+  invoicePayeds: string
   invoiceDueDate: string
   invoiceValue: string
+  situation: string
 }
 
 interface ModalProps {
   modalIsOpen: boolean
   setRegisterStudentModalIsOpen: (value: React.SetStateAction<boolean>) => void
-  setStudentsList: (value: React.SetStateAction<Student[]>) => void
+  setStudentsList: React.Dispatch<React.SetStateAction<Student[]>>
 }
 
 export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setStudentsList }: ModalProps) {
+  
   const { register, handleSubmit, reset, control } = useForm<Student>({})
 
   function closeModalWithClickInLayer(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -28,16 +30,17 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
   }
 
   function handleRegisterNewStudent(data: Student) {
-    const { daysOfPayment, invoiceDueDate, invoiceValue, lasyDayToPay, name, startDate, startTermToPay } = data
+    const { daysOfPayment, invoiceDueDate, invoiceValue, invoicePayeds, name, startDate, startTermToPay, situation } = data
 
     const newStudent: Omit<Student, "id"> = {
       daysOfPayment,
       invoiceDueDate, 
       invoiceValue,
-      lasyDayToPay,
-      name, 
+      invoicePayeds,
+      name: name.toLowerCase(), 
       startDate,
-      startTermToPay
+      startTermToPay,
+      situation
     }
 
     StudentService.create(newStudent)
@@ -56,7 +59,7 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
         className={modalIsOpen ? `modal-layer` : "none"}
       >
         <div 
-          className={modalIsOpen ? `modal` : "none"}
+          className={modalIsOpen ? `modal-students` : "none"}
         >
           <header>
             <button>Cadastrar</button>
@@ -110,12 +113,12 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
 
             <div>
               <label 
-                htmlFor="lasyDayToPay">Fim Prazo para Pagar:
+                htmlFor="invoicesPayeds">Faturas Pagas:
               </label>
               <input 
-                id='lasyDayToPay' 
-                type="date"
-                {...register("lasyDayToPay")} 
+                id='invoicesPayeds' 
+                type="number"
+                {...register("invoicePayeds")} 
               /></div> 
 
             <div>
@@ -136,6 +139,16 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
                 id='invoiceValue' 
                 type="number"
                 {...register("invoiceValue")} 
+              />
+            </div> 
+            <div>
+              <label 
+                htmlFor="invoiceValue">Situação
+              </label>
+              <input 
+                id='invoiceValue' 
+                type="text"
+                {...register("situation")} 
               />
             </div> 
 
