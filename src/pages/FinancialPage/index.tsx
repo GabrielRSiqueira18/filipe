@@ -6,44 +6,24 @@ import { Product } from "../../components/Product"
 import { ProductsService } from "../../api/services/product"
 import ReactPaginate from "react-paginate"
 import { ModalFinancial } from "../../components/ModalFinancial"
+import { formatDate } from "../../utils/formatDate"
+import { ProductInterface, ProductQuerySearch } from "./interfaces"
 import { useForm } from "react-hook-form"
-
-interface Product {
-  id: string
-  date: string
-  description: string
-  month: string
-  pricePerUnit: number
-  quantity: number
-  totalValue: number
-  type: "Entrada" | "Saída"
-}
 
 interface ReactPaginateOnPageChangeEvent {
   selected: number
 }
 
-interface StudentQuerySearch {
-  value: string
-}
-
-function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  return `${date.getDate().toString().padStart(2, '0')}/${date.getMonth() + 1}/${date.getFullYear()}`;
-}
-
 export function FinancialPage() {
-  const { register, handleSubmit, reset } = useForm<StudentQuerySearch>({})
-
   const [ registerProductModalIsOpen, setRegisterProductModalIsOpen ] = useState(false)
+  const [ productsList, setProductsList ] = useState<ProductInterface[]>([])
 
-  const [ productList, setProductList ] = useState<Product[]>([])
-
+  //Pagination
   const [ pageNumber, setPageNumber ] = useState(0)
   const productPerPage = 10
   const pageVisited = pageNumber * productPerPage
 
-  const displayProducts = productList.slice(pageVisited, pageVisited + productPerPage).map(product => {
+  const displayProducts = productsList.slice(pageVisited, pageVisited + productPerPage).map(product => {
     return (
       <Product
         key={product.id}
@@ -59,35 +39,65 @@ export function FinancialPage() {
     )
   })
 
-
-  
- //Query Search By Name
- async function handleSubmitSearchByDescription({ value }: StudentQuerySearch) {
-  ProductsService.getByDescription(value.toLowerCase())
-    .then(product => setProductList(product))
-}
-  
-
-  useEffect(() => {
-    ProductsService.getAll()
-      .then((products) => {
-        setProductList(products)
-      })
-  }, [])
-
-  const pageCount = Math.ceil(productList.length / productPerPage)
+  const pageCount = Math.ceil(productsList.length / productPerPage)
 
   function changePage(event: ReactPaginateOnPageChangeEvent) {
     setPageNumber(event.selected)
   }
 
+  //Acess Products in DB
+  async function getAllProducts() {
+    ProductsService.getAll()
+      .then((products) => {
+        setProductsList(products)
+      })
+  }
+
+  useEffect(() => {
+    ProductsService.getAll()
+      .then((products) => {
+        setProductsList(products)
+      })
+  }, [])
+
+  
+  //Form Filter
+  const { register, handleSubmit, reset } = useForm<ProductQuerySearch>({})
+
+  async function handleSubmitSearchByDescription({ value }: ProductQuerySearch) {
+    ProductsService.getByDescription(value.toLowerCase())
+      .then(product => setProductsList(product))
+  }
+
+  const [ productsIsSortedAlphabeticAToZ, setProductsIsSortedAlphabeticAToZ ] = useState(false)
+  const [ productsIsSortedInvoiceBigger, setProductsIsSortedInvoiceBigger ] = useState(false)
+
+  function sortProductsAlphabetic() {
+    if(productsIsSortedAlphabeticAToZ == false) {
+      setProductsList(productsList.sort((a, b) => a.description.toUpperCase().localeCompare(b.description.toUpperCase())))
+      setProductsIsSortedAlphabeticAToZ(true)
+    } else {
+      setProductsList(productsList.sort((a, b) => b.description.toUpperCase().localeCompare(a.description.toUpperCase())))
+      setProductsIsSortedAlphabeticAToZ(false)
+    }
+  }
+  
+  function sortProductsByTotalValue() {
+    if(productsIsSortedInvoiceBigger == false) {
+      setProductsList(productsList.sort((a, b) => Number(a.totalValue) - Number(b.totalValue)))
+      setProductsIsSortedInvoiceBigger(true)
+    } else {
+      setProductsList(productsList.sort((a, b) => Number(b.totalValue) - Number(a.totalValue)))
+      setProductsIsSortedInvoiceBigger(false)
+    }
+  }
 
   return(
     <>
       <ModalFinancial
         registerProductModalIsOpen={registerProductModalIsOpen}
         setRegisterProductModalIsOpen={setRegisterProductModalIsOpen}
-        setProductList={setProductList}
+        setProductList={setProductsList}
       />
 
       <header className='header'>
@@ -113,23 +123,24 @@ export function FinancialPage() {
             <button>Alunos</button>
           </NavLink>
         </header>
+        
         <form onSubmit={handleSubmit(handleSubmitSearchByDescription)} className="form-filter">
-          <div className="input-container">
-            <input 
-              type="text" 
-              placeholder="Pesquise por um produto" 
-              {...register("value")}
-            />
-            <button>Pesquisar</button>
-          </div>
+      <div className="input-container">
+        <input 
+          type="text" 
+          placeholder="Pesquise por um produto" 
+          {...register("value")}
+        />
+        <button>Pesquisar</button>
+        <button type="reset" onClick={() => getAllProducts()}>Limpar</button>
+      </div>
 
-          <div className="button-container">
-            <button type="button">A-Z</button>
-            <button type="button">Faturas paga maior e menor </button>
-            <button type="button">Situação</button>
-          </div>
-        </form>
-
+      <div className="button-container">
+        <button onClick={() => sortProductsAlphabetic()} type="button">{ productsIsSortedAlphabeticAToZ ? "Z-A" : "A-Z" }</button>
+        <button onClick={() => sortProductsByTotalValue()} type="button">Maior total </button>
+        <button type="button">Situação</button>
+      </div>
+    </form>
 
 
         <div className='table-container'>

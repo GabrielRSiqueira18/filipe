@@ -6,9 +6,9 @@ import { NavLink } from "react-router-dom"
 import { StudentService } from "../../api/services/students";
 import ReactPaginate from "react-paginate";
 import { ModalStudent } from "../../components/ModalStudent";
-import { ReactPaginateOnPageChangeEvent, StudentInterface } from "./interfaces/index"
-import { FormFilter } from "./components/FormFilter";
-import { formatDate } from "./utils/formatDate";
+import { ReactPaginateOnPageChangeEvent, StudentInterface, StudentQuerySearch } from "./interfaces/index"
+import { formatDate } from "../../utils/formatDate";
+import { useForm } from "react-hook-form";
 
 export function StudentPage() {
   const [ studentsList, setStudentsList ] = useState<StudentInterface[]>([])
@@ -20,14 +20,10 @@ export function StudentPage() {
   const pageVisited = pageNumber * productPerPage
   const pageCount = Math.ceil(studentsList.length / productPerPage)
 
-  async function getAllStudents() {
-    StudentService.getAll()
-      .then((products) => {
-        setStudentsList(products)
-      })
+  function changePage(event: ReactPaginateOnPageChangeEvent) {
+    setPageNumber(event.selected)
   }
 
-  //Display students in pagination
   const displayStudents = studentsList.slice(pageVisited, pageVisited + productPerPage).map(student => {
     return (
       <Student
@@ -46,15 +42,19 @@ export function StudentPage() {
     )
   })
 
-  //Get students data in DB server
+  //Get Students in DB
+  async function getAllStudents() {
+    StudentService.getAll()
+      .then((products) => {
+        setStudentsList(products)
+      })
+  }  
+
+  
   useEffect(() => {
     getAllStudents()
   }, [])
   
-  function changePage(event: ReactPaginateOnPageChangeEvent) {
-    setPageNumber(event.selected)
-  }
-
   //Adjust values 
   const totalValues = studentsList.reduce((finalValue, innitialValue) => {
     const value = Number(innitialValue.invoiceValue) * Number(innitialValue.invoicePayeds) 
@@ -71,6 +71,37 @@ export function StudentPage() {
   const situationOk = studentsList.filter(student => student.situation === "Ok").length
   const situationDue = studentsList.filter(student => student.situation === "Vencida").length
   const situationRenew = studentsList.filter(student => student.situation === "Renovar").length
+
+  const { register, handleSubmit } = useForm<StudentQuerySearch>({})
+
+  const [ studentsIsSortedAlphabeticAToZ, setStudentsIsSortedAlphabeticAToZ ] = useState(false)
+  const [ studentsIsSortedInvoiceBigger, setStudentsIsSortedInvoiceBigger ] = useState(false)
+
+  //Form Filter
+  async function handleSubmitSearchByName({ value }: { value: string }) {
+    StudentService.getByName(value.toLowerCase())
+      .then(students => setStudentsList(students))
+  }
+
+  function sortStudentAlphabetic() {
+    if(studentsIsSortedAlphabeticAToZ == false) {
+      setStudentsList(studentsList.sort((a, b) => a.name.toUpperCase().localeCompare(b.name.toUpperCase())))
+      setStudentsIsSortedAlphabeticAToZ(true)
+    } else {
+      setStudentsList(studentsList.sort((a, b) => b.name.toUpperCase().localeCompare(a.name.toUpperCase())))
+      setStudentsIsSortedAlphabeticAToZ(false)
+    }
+  }
+
+  function sortStudentByInvoice() {
+    if(studentsIsSortedInvoiceBigger == false) {
+      setStudentsList(studentsList.sort((a, b) => Number(a.invoicePayeds) - Number(b.invoicePayeds)))
+      setStudentsIsSortedInvoiceBigger(true)
+    } else {
+      setStudentsList(studentsList.sort((a, b) => Number(b.invoicePayeds) - Number(a.invoicePayeds)))
+      setStudentsIsSortedInvoiceBigger(false)
+    }
+  }
 
   return(
     <>
@@ -103,10 +134,23 @@ export function StudentPage() {
           </NavLink>
         </header>
 
-        <FormFilter 
-          studentsList={studentsList}
-          setStudentsList={setStudentsList}
-        />  
+        <form onSubmit={handleSubmit(handleSubmitSearchByName)} className="form-filter">
+      <div className="input-container">
+        <input 
+          type="text" 
+          placeholder="Pesquise por um produto" 
+          {...register("value")}
+        />
+        <button>Pesquisar</button>
+        <button type="reset" onClick={() => getAllStudents()}>Limpar</button>
+      </div>
+
+      <div className="button-container">
+        <button onClick={() => sortStudentAlphabetic()} type="button">A-Z</button>
+        <button onClick={() => sortStudentByInvoice()} type="button">Faturas paga maior e menor </button>
+        <button type="button">Situação</button>
+      </div>
+    </form> 
 
         <div className='table-container'>
           <table>

@@ -16,82 +16,38 @@
       "invoiceDueDate": "",
       "invoiceValue": "",
       "invoicePayeds": "",
-      "name": "pedro",
+      "name": "aldemir",
       "startDate": "",
       "startTermToPay": "",
-      "situation": "Renovar",
+      "situation": "Ok",
       "id": 2
-    },
-    {
-      "daysOfPayment": "",
-      "invoiceDueDate": "",
-      "invoiceValue": "2",
-      "invoicePayeds": "3",
-      "name": "gabriel",
-      "startDate": "",
-      "startTermToPay": "",
-      "situation": "",
-      "id": 3
-    },
-    {
-      "daysOfPayment": "",
-      "invoiceDueDate": "",
-      "invoiceValue": "4",
-      "invoicePayeds": "3",
-      "name": "gabriel",
-      "startDate": "",
-      "startTermToPay": "",
-      "situation": "",
-      "id": 4
-    },
-    {
-      "daysOfPayment": "",
-      "invoiceDueDate": "",
-      "invoiceValue": "4",
-      "invoicePayeds": "3",
-      "name": "gabriel",
-      "startDate": "",
-      "startTermToPay": "",
-      "situation": "",
-      "id": 5
-    },
-    {
-      "daysOfPayment": "",
-      "invoiceDueDate": "",
-      "invoiceValue": "5",
-      "invoicePayeds": "1",
-      "name": "gabriel",
-      "startDate": "",
-      "startTermToPay": "",
-      "situation": "",
-      "id": 6
     }
   ],
   "products": [
     {
-      "date": "2023-12-21",
-      "description": "gabriel",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
+      "date": "2024-01-05",
+      "description": "cadeira",
+      "pricePerUnit": "10",
+      "quantity": "2",
+      "totalValue": 20,
       "type": "Saída",
       "id": 1
     },
     {
-      "date": "2023-12-21",
-      "description": "pedro",
-      "pricePerUnit": "1",
-      "quantity": "1",
-      "totalValue": 1,
+      "date": "2024-01-05",
+      "description": "mesa",
+      "pricePerUnit": "10",
+      "quantity": "2",
+      "totalValue": 20,
       "type": "Saída",
       "id": 2
     },
     {
-      "date": "2023-12-13",
-      "description": "pedro joaquim",
-      "pricePerUnit": "2",
+      "date": "2024-01-05",
+      "description": "aeroporto",
+      "pricePerUnit": "10",
       "quantity": "2",
-      "totalValue": 4,
+      "totalValue": 20,
       "type": "Saída",
       "id": 3
     }
