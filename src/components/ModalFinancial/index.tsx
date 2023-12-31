@@ -1,5 +1,7 @@
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import { ProductsService } from "../../api/services/product"
+import * as RadioGroup from '@radix-ui/react-radio-group';
+import "./styles.css"
 
 interface ModalFinancialProps {
   registerProductModalIsOpen: boolean
@@ -20,7 +22,11 @@ interface Product {
 }
 
 export function ModalFinancial({ registerProductModalIsOpen, setRegisterProductModalIsOpen, setProductList }: ModalFinancialProps) {
-  const { register, handleSubmit, reset } = useForm<Product>({})
+  const { register, handleSubmit, reset, control } = useForm<Product>({
+    defaultValues: {
+      type: "Entrada",
+    }
+  })
 
 
   function closeModalWithClickInLayer(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
@@ -119,15 +125,25 @@ export function ModalFinancial({ registerProductModalIsOpen, setRegisterProductM
             </div> 
 
             <div>
-              <label 
-                htmlFor="type">Tipo
-              </label>
-              <input 
-                id='type' 
-                type="text"
-                {...register("type")} 
-                required
-              />
+              <Controller
+                control={control}
+                name="type"
+                render={({ field }) => {
+                  return (
+                    <RadioGroup.Root className="radio-container" onValueChange={field.onChange} value={field.value}>
+                      <RadioGroup.Item className="entry" value="Entrada">
+                        Entrada
+                      </RadioGroup.Item>
+                      <RadioGroup.Item className="out" value="Saída">
+                        Saída
+                      </RadioGroup.Item>
+                    </RadioGroup.Root>
+                  )
+                }}
+              >
+
+
+              </Controller>
             </div> 
             <button className="register">
               Cadastrar

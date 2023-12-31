@@ -19,7 +19,7 @@ interface ProductProps {
         <td>{quantity}</td>
         <td>{pricePerUnit}</td>
         <td>{totalValue}</td>
-        <td>{type}</td>
+        <td className={`${type === "Entrada" ? "ok-2" : "late"}`}>{type}</td>
       </tr>
   )
   }

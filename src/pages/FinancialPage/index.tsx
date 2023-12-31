@@ -9,6 +9,7 @@ import { ModalFinancial } from "../../components/ModalFinancial"
 import { formatDate } from "../../utils/formatDate"
 import { ProductInterface, ProductQuerySearch } from "./interfaces"
 import { useForm } from "react-hook-form"
+import { formatter } from "../../utils/formatterValueToBRL"
 
 interface ReactPaginateOnPageChangeEvent {
   selected: number
@@ -45,7 +46,7 @@ export function FinancialPage() {
     setPageNumber(event.selected)
   }
 
-  //Acess Products in DB
+  //Get Products in DB
   async function getAllProducts() {
     ProductsService.getAll()
       .then((products) => {
@@ -92,6 +93,24 @@ export function FinancialPage() {
     }
   }
 
+  //Adjust Value
+  const totalValue = productsList.reduce((finalValue, innitialValue) => {
+    let value
+
+    if(innitialValue.type === "Entrada") {
+      value = (Number(innitialValue.totalValue))
+    } else {
+      value = -(Number(innitialValue.totalValue))
+    }
+
+    return finalValue += value
+  }, 0)
+
+  //Types Count
+  const entry = productsList.filter(product => product.type === "Entrada").length
+  const out = productsList.filter(product => product.type === "Saída").length
+  
+  console.log(totalValue)
   return(
     <>
       <ModalFinancial
@@ -104,14 +123,15 @@ export function FinancialPage() {
         <div className='container-header'>
         <div className='container-students-situation'>
             <h2>Produtos:</h2>
-            <p className='ok'>Entrada: <span>0</span></p>
-            <p className='overdue'>Saída: <span>0</span></p>
-            <p>Total Valor: <span>1000</span></p>
+            <p className='ok'>Entrada: <span>{entry}</span></p>
+            <p className='overdue'>Saída: <span>{out}</span></p>
+            {/* <p>Total Valor: <span>{formatter.format(totalValue)}</span></p> */}
           </div>
           <div className='container-total-values-students'>
             <h2>Total Valores Produtos</h2>
-            <p>Janeiro</p>
-            <p className='money'>R$ 1000.00</p>
+            <p style={totalValue < 0 ? { color: 'red' } : { color: 'green' }} className='money'>
+              {formatter.format(totalValue)}
+            </p>
           </div>
         </div>
       </header>

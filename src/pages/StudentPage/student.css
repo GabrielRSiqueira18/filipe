@@ -1,0 +1,11 @@
+.ok {
+  color: var(--green-600);
+}
+
+.renew {
+  color: var(--orange-600);
+}
+
+.late {
+  color: var(--red-600);
+}

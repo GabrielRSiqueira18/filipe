@@ -1,16 +1,18 @@
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import { StudentService } from "../../api/services/students"
+import * as RadioGroup from '@radix-ui/react-radio-group';
+
+import "./styles.css"
 
 interface Student {
   id: number
   name: string
   startDate: string
-  startTermToPay: string
-  daysOfPayment: string
+  phoneNumber: string
   invoicePayeds: string
-  invoiceDueDate: string
   invoiceValue: string
   situation: string
+  dayToPay: string
 }
 
 interface ModalProps {
@@ -21,7 +23,11 @@ interface ModalProps {
 
 export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setStudentsList }: ModalProps) {
   
-  const { register, handleSubmit, reset, control } = useForm<Student>({})
+  const { register, handleSubmit, reset, control } = useForm<Student>({
+    defaultValues: {
+      situation: "Pago"
+    }
+  })
 
   function closeModalWithClickInLayer(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     if (e.target instanceof HTMLDivElement && e.target.className === "modal-layer") {
@@ -30,17 +36,16 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
   }
 
   function handleRegisterNewStudent(data: Student) {
-    const { daysOfPayment, invoiceDueDate, invoiceValue, invoicePayeds, name, startDate, startTermToPay, situation } = data
+    const { invoiceValue, dayToPay,invoicePayeds, name, startDate, phoneNumber, situation } = data
 
     const newStudent: Omit<Student, "id"> = {
-      daysOfPayment,
-      invoiceDueDate, 
       invoiceValue,
       invoicePayeds,
       name: name.toLowerCase(), 
       startDate,
-      startTermToPay,
-      situation
+      phoneNumber,
+      situation,
+      dayToPay
     }
 
     StudentService.create(newStudent)
@@ -91,25 +96,24 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
 
             <div>
               <label 
-                htmlFor="startTermToPay">Início Prazo para Pagar:
+                htmlFor="phoneNumber">Número:
               </label>
               <input 
-                id='startTermToPay' 
-                type="date"
-                {...register("startTermToPay")} 
+                id='phoneNumber' 
+                type="text"
+                {...register("phoneNumber")} 
               /> 
             </div>
 
             <div>
               <label 
-                htmlFor="daysOfPayment">Prazo dias do Pagamento:
+                htmlFor="dayToPay">Prazo Dias:
               </label>
               <input 
-                id='daysOfPayment' 
+                id='dayToPay' 
                 type="number"
-                {...register("daysOfPayment")} 
-              /> 
-            </div>
+                {...register("dayToPay")} 
+              /></div> 
 
             <div>
               <label 
@@ -121,15 +125,7 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
                 {...register("invoicePayeds")} 
               /></div> 
 
-            <div>
-              <label 
-                htmlFor="incoiceDueDate">Dias para Vencer Fatura:
-              </label>
-              <input 
-                id='incoiceDueDate'
-                type="number"
-                {...register("invoiceDueDate")} 
-              /></div> 
+            
 
             <div>
               <label 
@@ -141,15 +137,33 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
                 {...register("invoiceValue")} 
               />
             </div> 
+
             <div>
-              <label 
-                htmlFor="invoiceValue">Situação
-              </label>
-              <input 
-                id='invoiceValue' 
-                type="text"
-                {...register("situation")} 
-              />
+              <Controller
+                control={control}
+                name="situation"
+                render={({ field }) => {
+                  return (
+                    <RadioGroup.Root className="radio-container" onValueChange={field.onChange} value={field.value}>
+                      <RadioGroup.Item className="entry" value="Pago">
+                        Pago
+                      </RadioGroup.Item>
+                      <RadioGroup.Item className="out" value="Vencido">
+                        Vencido
+                      </RadioGroup.Item>
+                    </RadioGroup.Root>
+                  )
+                }}
+              >
+
+
+              </Controller>
+            </div> 
+              
+
+
+            <div>
+              
             </div> 
 
             <button className="register">Cadastrar</button>
@@ -159,3 +173,12 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
       </div>
   )
 }
+
+{/* <label 
+                htmlFor="invoiceValue">Situação
+              </label>
+              <input 
+                id='invoiceValue' 
+                type="text"
+                {...register("situation")} 
+              /> */}

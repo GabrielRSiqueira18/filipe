@@ -1,55 +1,64 @@
 {
   "students": [
     {
-      "daysOfPayment": "",
-      "invoiceDueDate": "",
-      "invoiceValue": "",
-      "invoicePayeds": "",
+      "invoiceValue": "10",
+      "invoicePayeds": "2",
       "name": "gabriel",
       "startDate": "",
-      "startTermToPay": "",
-      "situation": "Ok",
+      "phoneNumber": "",
+      "situation": "Paga",
+      "dayToPay": "30",
       "id": 1
     },
     {
-      "daysOfPayment": "",
-      "invoiceDueDate": "",
       "invoiceValue": "",
       "invoicePayeds": "",
-      "name": "aldemir",
+      "name": "",
       "startDate": "",
-      "startTermToPay": "",
-      "situation": "Ok",
+      "phoneNumber": "",
+      "situation": "Pago",
+      "dayToPay": "",
       "id": 2
+    },
+    {
+      "invoiceValue": "",
+      "invoicePayeds": "",
+      "name": "",
+      "startDate": "",
+      "phoneNumber": "",
+      "situation": "Vencida",
+      "dayToPay": "",
+      "id": 3
+    },
+    {
+      "invoiceValue": "",
+      "invoicePayeds": "",
+      "name": "",
+      "startDate": "",
+      "phoneNumber": "",
+      "situation": "Vencido",
+      "dayToPay": "",
+      "id": 4
     }
   ],
   "products": [
     {
-      "date": "2024-01-05",
-      "description": "cadeira",
-      "pricePerUnit": "10",
-      "quantity": "2",
-      "totalValue": 20,
+      "date": "2023-12-07",
+      "description": "gabriel",
+      "pricePerUnit": "5",
+      "quantity": "10",
+      "totalValue": 50,
       "type": "Saída",
       "id": 1
     },
     {
-      "date": "2024-01-05",
-      "description": "mesa",
-      "pricePerUnit": "10",
-      "quantity": "2",
-      "totalValue": 20,
-      "type": "Saída",
+      "date": "2023-12-15",
+      "description": "g",
+      "pricePerUnit": "30",
+      "quantity": "10",
+      "totalValue": 300,
+      "type": "Entrada",
       "id": 2
-    },
-    {
-      "date": "2024-01-05",
-      "description": "aeroporto",
-      "pricePerUnit": "10",
-      "quantity": "2",
-      "totalValue": 20,
-      "type": "Saída",
-      "id": 3
     }
   ]
 }

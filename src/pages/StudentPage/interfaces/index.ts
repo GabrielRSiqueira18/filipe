@@ -2,12 +2,11 @@ export interface StudentInterface {
     id: number
     name: string
     startDate: string
-    startTermToPay: string
-    daysOfPayment: string
+    phoneNumber: string
     invoicePayeds: string
-    invoiceDueDate: string
     invoiceValue: string
     situation: string
+    dayToPay: string
   }
 
 export interface StudentQuerySearch {

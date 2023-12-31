@@ -9,6 +9,7 @@ import { ModalStudent } from "../../components/ModalStudent";
 import { ReactPaginateOnPageChangeEvent, StudentInterface, StudentQuerySearch } from "./interfaces/index"
 import { formatDate } from "../../utils/formatDate";
 import { useForm } from "react-hook-form";
+import { formatter } from "../../utils/formatterValueToBRL";
 
 export function StudentPage() {
   const [ studentsList, setStudentsList ] = useState<StudentInterface[]>([])
@@ -30,14 +31,13 @@ export function StudentPage() {
         key={student.id}
         id={student.id}
         name={student.name.toUpperCase()}
-        daysOfPayment={student.daysOfPayment}
-        invoiceDueDate={student.invoiceDueDate}
         invoiceValue={student.invoiceValue}
         invoicesPayeds={student.invoicePayeds}
         situation={student.situation}
+        dayToPay={student.dayToPay}
 
         startDate={formatDate(student.startDate)}
-        startTermToPay={formatDate(student.startTermToPay)}
+        phoneNumber={formatDate(student.phoneNumber)}
       />
     )
   })
@@ -45,8 +45,8 @@ export function StudentPage() {
   //Get Students in DB
   async function getAllStudents() {
     StudentService.getAll()
-      .then((products) => {
-        setStudentsList(products)
+      .then((students) => {
+        setStudentsList(students)
       })
   }  
 
@@ -60,17 +60,10 @@ export function StudentPage() {
     const value = Number(innitialValue.invoiceValue) * Number(innitialValue.invoicePayeds) 
     return finalValue += value
   }, 0)
-  console.log(totalValues)
-
-  const formatter = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-  })
 
   //Situations
-  const situationOk = studentsList.filter(student => student.situation === "Ok").length
+  const situationOk = studentsList.filter(student => student.situation === "Paga").length
   const situationDue = studentsList.filter(student => student.situation === "Vencida").length
-  const situationRenew = studentsList.filter(student => student.situation === "Renovar").length
 
   const { register, handleSubmit } = useForm<StudentQuerySearch>({})
 
@@ -115,9 +108,8 @@ export function StudentPage() {
         <div className='container-header'>
         <div className='container-students-situation'>
             <h2>Alunos:</h2>
-            <p className='ok'>OK: <span>{situationOk}</span></p>
-            <p className='renew'>Renovar: <span>{situationDue}</span></p>
-            <p className='overdue'>Vencido: <span>{situationRenew}</span></p>
+            <p className='ok'>{situationOk > 1 ? "Pagos" : "Pago"}: <span>{situationOk}</span></p>
+            <p className='overdue'>{situationDue > 1 ? "Vencidos" : "Vencido"}: <span>{situationDue}</span></p>
           </div>
           <div className='container-total-values-students'>
             <h2>Total Valores Alunos</h2>
@@ -146,7 +138,7 @@ export function StudentPage() {
       </div>
 
       <div className="button-container">
-        <button onClick={() => sortStudentAlphabetic()} type="button">A-Z</button>
+        <button onClick={() => sortStudentAlphabetic()} type="button">{studentsIsSortedAlphabeticAToZ ? "Z-A" : "A-Z"}</button>
         <button onClick={() => sortStudentByInvoice()} type="button">Faturas paga maior e menor </button>
         <button type="button">Situação</button>
       </div>
@@ -159,10 +151,8 @@ export function StudentPage() {
                 <th>ID</th>
                 <th>Aluno</th>
                 <th>Data Início</th>
-                <th>Prazo p/ Pagar</th>
+                <th>Número</th>
                 <th>Prazo Dias</th>
-                <th>Fim Prazo</th>
-                <th>Dias a Vencer</th>
                 <th>Valor</th>
                 <th>Faturas Pagas</th>
                 <th>Situação</th>

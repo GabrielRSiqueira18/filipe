@@ -204,10 +204,7 @@
   color: var(--green-600);
   font-weight: 400;
 }
-.renew {
-  color: var(--orange-600);
-  font-weight: 400;
-}
+
 .overdue {
   color: var(--red-600);
   font-weight: 400;
@@ -360,10 +357,25 @@ table {
     display: flex;
     gap: 0.25rem;
 
+    a[rel="canonical"] {
+      color: red;
+    }
+
     &:hover {
-      border: 1px solid black;
+      color: var(--gray-700);
+      filter: brightness(0.6);
     }
   }
+}
+
+.ok-2 {
+  background-color: var(--green-700);
+  color: var(--gray-50) !important; 
+}
+
+.late {
+  background-color: var(--red-700);
+  color: var(--gray-50) !important;
 }
 
 @media screen and (max-width: 1024px) {

@@ -1,0 +1,56 @@
+.radio-container {
+    display: grid !important; 
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem !important;
+    justify-content: center;
+    align-items: center;
+  
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border-radius: 6px;
+      padding: 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 1px solid var(--gray-950);
+      background-color: transparent;
+      
+      color: var(--gray-950);
+  
+      &.entry:hover {
+        background-color: var(--green-600);
+        color: var(--gray-50);
+        border-color: transparent;
+      }
+  
+      &.out:hover {
+        background-color: var(--red-600);
+        color: var(--gray-50);
+        border-color: transparent;
+      }
+      
+      &[data-state='unchecked']:hover {
+        transition: background-color 0.2s;
+        background-color: var(--gray-700);
+        color: var(--gray-950);
+        border-color: var(--gray-950);
+      }
+  
+      &[data-state='checked'].entry {
+        background-color: var(--green-600);
+        color: var(--gray-50);
+        border-color: transparent;
+      }
+  
+      &[data-state='checked'].out {
+        background-color: var(--red-600);
+        color: var(--gray-50);
+        border-color: transparent;
+      }
+  
+  
+       
+    }
+  }
