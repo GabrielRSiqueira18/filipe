@@ -420,6 +420,159 @@
       "totalValue": 2,
       "type": "Saída",
       "id": 21
+    },
+    {
+      "date": "2024-02-13",
+      "description": "gabriel",
+      "pricePerUnit": "2",
+      "quantity": "2",
+      "totalValue": 4,
+      "type": "Entrada",
+      "id": 22
+    },
+    {
+      "date": "2024-02-14",
+      "description": "eg",
+      "pricePerUnit": "2",
+      "quantity": "23",
+      "totalValue": 46,
+      "type": "Entrada",
+      "id": 23
+    },
+    {
+      "date": "2024-02-14",
+      "description": "eg",
+      "pricePerUnit": "2",
+      "quantity": "23",
+      "totalValue": 46,
+      "type": "Entrada",
+      "id": 24
+    },
+    {
+      "date": "2024-02-14",
+      "description": "eg",
+      "pricePerUnit": "2",
+      "quantity": "23",
+      "totalValue": 46,
+      "type": "Entrada",
+      "id": 25
+    },
+    {
+      "date": "2024-02-14",
+      "description": "eg",
+      "pricePerUnit": "2",
+      "quantity": "23",
+      "totalValue": 46,
+      "type": "Entrada",
+      "id": 26
+    },
+    {
+      "date": "2024-02-14",
+      "description": "eg",
+      "pricePerUnit": "2",
+      "quantity": "23",
+      "totalValue": 46,
+      "type": "Entrada",
+      "id": 27
+    },
+    {
+      "date": "2024-02-14",
+      "description": "eg",
+      "pricePerUnit": "2",
+      "quantity": "23",
+      "totalValue": 46,
+      "type": "Entrada",
+      "id": 28
+    },
+    {
+      "date": "2024-02-14",
+      "description": "eg",
+      "pricePerUnit": "2",
+      "quantity": "23",
+      "totalValue": 46,
+      "type": "Entrada",
+      "id": 29
+    },
+    {
+      "date": "2024-02-14",
+      "description": "eg",
+      "pricePerUnit": "2",
+      "quantity": "23",
+      "totalValue": 46,
+      "type": "Entrada",
+      "id": 30
+    },
+    {
+      "date": "2024-02-14",
+      "description": "eg",
+      "pricePerUnit": "2",
+      "quantity": "23",
+      "totalValue": 46,
+      "type": "Entrada",
+      "id": 31
+    },
+    {
+      "date": "2024-02-14",
+      "description": "eg",
+      "pricePerUnit": "2",
+      "quantity": "23",
+      "totalValue": 46,
+      "type": "Entrada",
+      "id": 32
+    },
+    {
+      "date": "2024-02-14",
+      "description": "eg",
+      "pricePerUnit": "2",
+      "quantity": "23",
+      "totalValue": 46,
+      "type": "Entrada",
+      "id": 33
+    },
+    {
+      "date": "2024-02-14",
+      "description": "eg",
+      "pricePerUnit": "2",
+      "quantity": "23",
+      "totalValue": 46,
+      "type": "Entrada",
+      "id": 34
+    },
+    {
+      "date": "2024-02-14",
+      "description": "eg",
+      "pricePerUnit": "2",
+      "quantity": "23",
+      "totalValue": 46,
+      "type": "Entrada",
+      "id": 35
+    },
+    {
+      "date": "2024-02-14",
+      "description": "eg",
+      "pricePerUnit": "2",
+      "quantity": "23",
+      "totalValue": 46,
+      "type": "Entrada",
+      "id": 36
+    },
+    {
+      "date": "2024-03-13",
+      "description": "gabriel",
+      "pricePerUnit": "10",
+      "quantity": "10",
+      "totalValue": 100,
+      "type": "Saída",
+      "id": 37
+    },
+    {
+      "date": "2024-03-13",
+      "description": "gabriel",
+      "pricePerUnit": "5",
+      "quantity": "10",
+      "totalValue": 50,
+      "type": "Entrada",
+      "id": 38
     }
   ]
 }

@@ -50,6 +50,7 @@ export function FinancialPage() {
 
   const [ countMonthActual, setCountMonthActual ] = useState(0)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const months = [
     "january",
     "february",
@@ -65,7 +66,7 @@ export function FinancialPage() {
    "december",
   ]
 
-  const monthActualEnglish = months[countMonthActual]
+  const [ monthActualEnglish, setMonthActualEnglish] = useState(months[0]);
   let monthActualPortuguese
 
   switch (monthActualEnglish) {
@@ -108,22 +109,6 @@ export function FinancialPage() {
     default:
       console.error("Invalid month name:", monthActualEnglish);
   }
-
-  //Get Products in DB
-  async function getAllProducts() {
-    ProductsService.getAll()
-      .then((products) => {
-        setProductsList(products)
-      })
-  }
-
-  useEffect(() => {
-    ProductsService.getAll()
-      .then((products) => {
-        setProductsList(products)
-      })
-  }, [])
-
   
   //Form Filter
   const { register, handleSubmit, reset } = useForm<ProductQuerySearch>({})
@@ -157,17 +142,7 @@ export function FinancialPage() {
   }
 
   //Adjust Value
-  const totalValue = productsList.reduce((finalValue, innitialValue) => {
-    let value
-
-    if(innitialValue.type === "Entrada") {
-      value = (Number(innitialValue.totalValue))
-    } else {
-      value = -(Number(innitialValue.totalValue))
-    }
-
-    return finalValue += value
-  }, 0)
+  const [ total, setTotal ] = useState(0)
 
   //Types Count
   const entry = productsList.filter(product => product.type === "Entrada").length
@@ -181,6 +156,8 @@ export function FinancialPage() {
         return state -= 1
       }
     })
+
+    setPageNumber(0)
   }
   
   function addMonths() {
@@ -191,8 +168,97 @@ export function FinancialPage() {
         return state += 1
       }
     })
+
+    setPageNumber(0)
+
   }
 
+  const [ totalNumberPerMonth, setTotalNumberPerMonth ] = useState(0)
+
+  useEffect(() => {
+    setMonthActualEnglish(months[countMonthActual]);
+  }, [countMonthActual, months])
+
+  const [ allProductList, setAllProductList ] = useState<ProductInterface[]>([])
+
+  useEffect(() => {
+    let monthNumber = 0
+
+  switch (monthActualEnglish) {
+    case "january":
+      monthNumber = 0;
+      break;
+    case "february":
+      monthNumber = 1;
+      break;
+    case "march":
+      monthNumber = 2;
+      break;
+    case "april":
+      monthNumber = 3;
+      break;
+    case "may":
+      monthNumber = 4;
+      break;
+    case "june":
+      monthNumber = 5;
+      break;
+    case "july":
+      monthNumber = 6;
+      break;
+    case "august":
+      monthNumber = 7;
+      break;
+    case "september":
+      monthNumber = 8;
+      break;
+    case "october":
+      monthNumber = 9;
+      break;
+    case "november":
+      monthNumber = 10;
+      break;
+    case "december":
+      monthNumber = 11;
+      break;
+  }
+
+  let allProducts:ProductInterface[]
+
+  ProductsService.getAll()
+  .then((products) => {
+    setAllProductList(products);
+
+    const filteredProducts = products.filter((product) => {
+      const date = new Date(product.date);
+      return date.getMonth() === monthNumber;
+    });
+
+    // Calculate totals (no need to recalculate within useEffect)
+    const totalValue = filteredProducts.reduce((finalValue, innitialValue) => {
+      const value = Number(innitialValue.totalValue);
+      return finalValue += innitialValue.type === "Entrada" ? value : -value;
+    }, 0);
+
+    const totalValuePerMonth = totalValue; // Same as filteredProducts' total
+    const totalValueAllMonths = allProductList.reduce((finalValue, innitialValue) => {
+      const value = Number(innitialValue.totalValue);
+      return finalValue += innitialValue.type === "Entrada" ? value : -value;
+    }, 0);
+
+    setTotal(totalValueAllMonths);
+    setTotalNumberPerMonth(totalValuePerMonth);
+    setProductsList(() => filteredProducts);
+  });
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [monthActualEnglish]); // Only re-run when monthActualEnglish changes
+
+  async function getAllProducts() {
+    ProductsService.getAll()
+    .then(products => {
+      setProductsList(products  )
+    })
+  }
 
   return(
     <>
@@ -212,8 +278,8 @@ export function FinancialPage() {
           </div>
           <div className='container-total-values-students'>
             <h2>Total Valores Produtos</h2>
-            <p style={totalValue < 0 ? { color: 'red' } : { color: 'green' }} className='money'>
-              {formatter.format(totalValue)}
+            <p style={total < 0 ? { color: 'red' } : { color: 'green' }} className='money'>
+              {formatter.format(total)}
             </p>
           </div>
         </div>
@@ -250,7 +316,7 @@ export function FinancialPage() {
         {monthActualPortuguese} 
         <button onClick={() => addMonths()}> <ArrowRight size={14} /> </button>
       </div>
-      RS 1000,00
+      {formatter.format(totalNumberPerMonth)}
 
 
         <div className='table-container'>
