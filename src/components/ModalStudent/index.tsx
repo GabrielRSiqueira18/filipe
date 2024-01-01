@@ -1,6 +1,5 @@
-import { Controller, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { StudentService } from "../../api/services/students"
-import * as RadioGroup from '@radix-ui/react-radio-group';
 
 import "./styles.css"
 
@@ -37,7 +36,7 @@ interface ModalProps {
 
 export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setStudentsList }: ModalProps) {
   
-  const { register, handleSubmit, reset, control } = useForm<Student>({
+  const { register, handleSubmit, reset } = useForm<Student>({
     defaultValues: {
       situation: "Pago"
     }
@@ -83,9 +82,7 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
         setStudentsList(state => [...state, result])
       })
 
-    // reset()
-
-    // setRegisterStudentModalIsOpen(false)
+    reset()
   }
 
   return (
@@ -157,30 +154,6 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
             </div> 
 
             <div>
-              <Controller
-                control={control}
-                name="situation"
-                render={({ field }) => {
-                  return (
-                    <RadioGroup.Root className="radio-container" onValueChange={field.onChange} value={field.value}>
-                      <RadioGroup.Item className="entry" value="Pago">
-                        Pago
-                      </RadioGroup.Item>
-                      <RadioGroup.Item className="out" value="Vencido">
-                        Vencido
-                      </RadioGroup.Item>
-                    </RadioGroup.Root>
-                  )
-                }}
-              >
-
-
-              </Controller>
-            </div> 
-              
-
-
-            <div>
               
             </div> 
 
@@ -191,12 +164,3 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
       </div>
   )
 }
-
-{/* <label 
-                htmlFor="invoiceValue">Situação
-              </label>
-              <input 
-                id='invoiceValue' 
-                type="text"
-                {...register("situation")} 
-              /> */}

@@ -10,7 +10,7 @@ import { ProductInterface, ProductQuerySearch } from "./interfaces"
 import { useForm } from "react-hook-form"
 import { formatter } from "../../utils/formatterValueToBRL"
 import { format } from "date-fns"
-import { ArrowLeft, ArrowRight } from "phosphor-react"
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from "phosphor-react"
 
 interface ReactPaginateOnPageChangeEvent {
   selected: number
@@ -69,6 +69,7 @@ export function FinancialPage() {
   const [ monthActualEnglish, setMonthActualEnglish] = useState(months[0]);
   let monthActualPortuguese
 
+  //Translate Months
   switch (monthActualEnglish) {
     case "january":
       monthActualPortuguese = "Janeiro";
@@ -116,8 +117,11 @@ export function FinancialPage() {
   async function handleSubmitSearchByDescription({ value }: ProductQuerySearch) {
     ProductsService.getByDescription(value.toLowerCase())
       .then(product => setProductsList(product))
+
+      reset()
   }
 
+  //Sorts
   const [ productsIsSortedAlphabeticAToZ, setProductsIsSortedAlphabeticAToZ ] = useState(false)
   const [ productsIsSortedInvoiceBigger, setProductsIsSortedInvoiceBigger ] = useState(false)
 
@@ -140,14 +144,13 @@ export function FinancialPage() {
       setProductsIsSortedInvoiceBigger(false)
     }
   }
-
-  //Adjust Value
-  const [ total, setTotal ] = useState(0)
+  
 
   //Types Count
   const entry = productsList.filter(product => product.type === "Entrada").length
   const out = productsList.filter(product => product.type === "Saída").length
   
+  //Alter Months
   function decreaseMonth() {
     setCountMonthActual(state => {
       if(state == 0) {
@@ -173,7 +176,9 @@ export function FinancialPage() {
 
   }
 
+  //Adjust Values Per Month
   const [ totalNumberPerMonth, setTotalNumberPerMonth ] = useState(0)
+  const [ total, setTotal ] = useState(0)
 
   useEffect(() => {
     setMonthActualEnglish(months[countMonthActual]);
@@ -223,32 +228,29 @@ export function FinancialPage() {
       break;
   }
 
-  let allProducts:ProductInterface[]
-
   ProductsService.getAll()
   .then((products) => {
-    setAllProductList(products);
+    setAllProductList(products)
 
     const filteredProducts = products.filter((product) => {
-      const date = new Date(product.date);
-      return date.getMonth() === monthNumber;
-    });
+      const date = new Date(product.date)
+      return date.getMonth() === monthNumber
+    })
 
-    // Calculate totals (no need to recalculate within useEffect)
     const totalValue = filteredProducts.reduce((finalValue, innitialValue) => {
-      const value = Number(innitialValue.totalValue);
-      return finalValue += innitialValue.type === "Entrada" ? value : -value;
-    }, 0);
+      const value = Number(innitialValue.totalValue)
+      return finalValue += innitialValue.type === "Entrada" ? value : -value
+    }, 0)
 
-    const totalValuePerMonth = totalValue; // Same as filteredProducts' total
+    const totalValuePerMonth = totalValue
     const totalValueAllMonths = allProductList.reduce((finalValue, innitialValue) => {
-      const value = Number(innitialValue.totalValue);
-      return finalValue += innitialValue.type === "Entrada" ? value : -value;
-    }, 0);
+      const value = Number(innitialValue.totalValue)
+      return finalValue += innitialValue.type === "Entrada" ? value : -value
+    }, 0)
 
-    setTotal(totalValueAllMonths);
-    setTotalNumberPerMonth(totalValuePerMonth);
-    setProductsList(() => filteredProducts);
+    setTotal(totalValueAllMonths)
+    setTotalNumberPerMonth(totalValuePerMonth)
+    setProductsList(() => filteredProducts)
   });
 // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [monthActualEnglish]); // Only re-run when monthActualEnglish changes
@@ -274,7 +276,6 @@ export function FinancialPage() {
             <h2>Produtos:</h2>
             <p className='ok'>Entrada: <span>{entry}</span></p>
             <p className='overdue'>Saída: <span>{out}</span></p>
-            {/* <p>Total Valor: <span>{formatter.format(totalValue)}</span></p> */}
           </div>
           <div className='container-total-values-students'>
             <h2>Total Valores Produtos</h2>
@@ -294,22 +295,21 @@ export function FinancialPage() {
         </header>
         
         <form onSubmit={handleSubmit(handleSubmitSearchByDescription)} className="form-filter">
-      <div className="input-container">
-        <input 
-          type="text" 
-          placeholder="Pesquise por um produto" 
-          {...register("value")}
-        />
-        <button>Pesquisar</button>
-        <button type="reset" onClick={() => getAllProducts()}>Limpar</button>
-      </div>
+          <div className="input-container">
+            <input 
+              type="text" 
+              placeholder="Pesquise por um produto" 
+              {...register("value")}
+            />
+            <button>Pesquisar</button>
+            <button type="reset" onClick={() => getAllProducts()}>Limpar</button>
+          </div>
 
-      <div className="button-container">
-        <button onClick={() => sortProductsAlphabetic()} type="button">{ productsIsSortedAlphabeticAToZ ? "Z-A" : "A-Z" }</button>
-        <button onClick={() => sortProductsByTotalValue()} type="button">Maior total </button>
-        <button type="button">Situação</button>
-      </div>
-    </form>
+          <div className="button-container">
+            <button onClick={() => sortProductsAlphabetic()} type="button">{ productsIsSortedAlphabeticAToZ ? "Z-A" : "A-Z" }</button>
+            <button onClick={() => sortProductsByTotalValue()} type="button"> Valores { productsIsSortedInvoiceBigger ?  <ArrowUp/> : <ArrowDown/> } </button>
+          </div>
+        </form>
 
     <div className="container-arrows-months">
         <button onClick={() => decreaseMonth()}> <ArrowLeft size={14} /> </button>

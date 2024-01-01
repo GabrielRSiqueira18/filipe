@@ -10,7 +10,7 @@ import { ReactPaginateOnPageChangeEvent, StudentInterface, StudentQuerySearch } 
 import { useForm } from "react-hook-form";
 import { formatter } from "../../utils/formatterValueToBRL";
 import { addDays, format, isBefore } from "date-fns";
-import { ArrowRight, ArrowLeft } from "phosphor-react"
+import { ArrowRight, ArrowLeft, ArrowUp, ArrowDown } from "phosphor-react"
 
 export function StudentPage() {
   const [ studentsList, setStudentsList ] = useState<StudentInterface[]>([])
@@ -21,9 +21,11 @@ export function StudentPage() {
   const productPerPage = 8
   const pageVisited = pageNumber * productPerPage
   const pageCount = Math.ceil(studentsList.length / productPerPage)
+  
 
   const [ countMonthActual, setCountMonthActual ] = useState(0)
 
+  //Sort By Months
   const months = [
     "january",
     "february",
@@ -42,8 +44,6 @@ export function StudentPage() {
   const monthActualEnglish = months[countMonthActual]
   let monthActualPortuguese
 
-
-  
   switch (monthActualEnglish) {
     case "january":
       monthActualPortuguese = "Janeiro";
@@ -85,7 +85,6 @@ export function StudentPage() {
       console.error("Invalid month name:", monthActualEnglish);
   }
 
-
   function changePage(event: ReactPaginateOnPageChangeEvent) {
     setPageNumber(event.selected)
   }
@@ -98,16 +97,16 @@ export function StudentPage() {
 
     const paymentIsDue = isBefore(dueDate, today)
 
-    console.log(paymentIsDue)
 
     const startDate = new Date(student.startDate)
     const startDateCorrect = addDays(startDate, 1)
 
     const situationPaymentMonth = student.monthsPayeds[monthActualEnglish as keyof typeof student.monthsPayeds] ? "Pago" : paymentIsDue ? "Vencido" : "Não Pago";
-    console.log(student.dueDate)
 
     const invoicesPayedsArray = Object.values(student.monthsPayeds).filter(month => month === true || month === false);
     const invoicesPayeds = invoicesPayedsArray.filter(payed => payed === true).length
+    
+    
 
     return (
       <Student
@@ -127,6 +126,9 @@ export function StudentPage() {
     )
   })
 
+  
+
+
   //Get Students in DB
   async function getAllStudents() {
     StudentService.getAll()
@@ -135,6 +137,28 @@ export function StudentPage() {
       })
   }  
 
+  //Add invoicesPayeds in Students Array List
+  useEffect(() => {
+    studentsList.slice(pageVisited, pageVisited + productPerPage).map(student => {
+  
+      const invoicesPayedsArray = Object.values(student.monthsPayeds).filter(month => month === true || month === false);
+      const invoicesPayeds = invoicesPayedsArray.filter(payed => payed === true).length
+      
+      setStudentsList((state) => {
+        return state.map((s) => {
+          if (s.id === student.id) {
+            return {
+              ...s,
+              invoicePayeds: invoicesPayeds.toString(),
+            };
+          } else {
+             return s;
+            }
+          });
+        })
+      })
+  
+    })
   
   useEffect(() => {
     getAllStudents()
@@ -150,8 +174,8 @@ export function StudentPage() {
   }, 0)
 
   //Situations
-  const situationOk = studentsList.filter(student => student.situation === "Paga").length
-  const situationDue = studentsList.filter(student => student.situation === "Vencida").length
+  const situationOk = studentsList.filter(student => student.monthsPayeds[monthActualEnglish as keyof typeof student.monthsPayeds] === true ).length
+  const situationDue = studentsList.filter(student => student.monthsPayeds[monthActualEnglish as keyof typeof student.monthsPayeds] === false ).length
 
   const { register, handleSubmit } = useForm<StudentQuerySearch>({})
 
@@ -165,6 +189,7 @@ export function StudentPage() {
   }
 
   function sortStudentAlphabetic() {
+    
     if(studentsIsSortedAlphabeticAToZ == false) {
       setStudentsList(studentsList.sort((a, b) => a.name.toUpperCase().localeCompare(b.name.toUpperCase())))
       setStudentsIsSortedAlphabeticAToZ(true)
@@ -176,14 +201,17 @@ export function StudentPage() {
 
   function sortStudentByInvoice() {
     if(studentsIsSortedInvoiceBigger == false) {
+      
       setStudentsList(studentsList.sort((a, b) => Number(a.invoicePayeds) - Number(b.invoicePayeds)))
       setStudentsIsSortedInvoiceBigger(true)
+  
     } else {
       setStudentsList(studentsList.sort((a, b) => Number(b.invoicePayeds) - Number(a.invoicePayeds)))
       setStudentsIsSortedInvoiceBigger(false)
     }
   }
  
+  //Alter Months
   function decreaseMonth() {
     setCountMonthActual(state => {
       if(state == 0) {
@@ -220,7 +248,6 @@ export function StudentPage() {
         <div className='container-students-situation'>
             <h2>Alunos:</h2>
             <p className='ok'>{situationOk > 1 ? "Pagos" : "Pago"}: <span>{situationOk}</span></p>
-            <p>{}</p>
             <p className='overdue'>{situationDue > 1 ? "Vencidos" : "Vencido"}: <span>{situationDue}</span></p>
           </div>
           <div className='container-total-values-students'>
@@ -251,8 +278,7 @@ export function StudentPage() {
 
       <div className="button-container">
         <button onClick={() => sortStudentAlphabetic()} type="button">{studentsIsSortedAlphabeticAToZ ? "Z-A" : "A-Z"}</button>
-        <button onClick={() => sortStudentByInvoice()} type="button">Faturas paga maior e menor </button>
-        <button type="button">Situação</button>
+        <button onClick={() => sortStudentByInvoice()} type="button">Faturas paga {studentsIsSortedInvoiceBigger ? <ArrowUp/> : <ArrowDown/>} </button>
       </div>
     </form> 
 

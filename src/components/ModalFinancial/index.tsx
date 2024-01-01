@@ -2,26 +2,16 @@ import { Controller, useForm } from "react-hook-form"
 import { ProductsService } from "../../api/services/product"
 import * as RadioGroup from '@radix-ui/react-radio-group';
 import "./styles.css"
+import { ProductInterface } from "../../pages/FinancialPage/interfaces";
 
 interface ModalFinancialProps {
   registerProductModalIsOpen: boolean
   setRegisterProductModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setProductList: React.Dispatch<React.SetStateAction<Product[]>>
-}
-
-interface Product {
-  id: string
-  date: string
-  description: string
-  pricePerUnit: number
-  quantity: number
-  totalValue: number
-  type: "Entrada" | "Saída"
-
+  setProductList: React.Dispatch<React.SetStateAction<ProductInterface[]>>
 }
 
 export function ModalFinancial({ registerProductModalIsOpen, setRegisterProductModalIsOpen, setProductList }: ModalFinancialProps) {
-  const { register, handleSubmit, reset, control } = useForm<Product>({
+  const { register, handleSubmit, reset, control } = useForm<ProductInterface>({
     defaultValues: {
       type: "Entrada",
     }
@@ -34,10 +24,10 @@ export function ModalFinancial({ registerProductModalIsOpen, setRegisterProductM
     }
   }
 
-  function handleRegisterNewProduct(data: Product) {
+  function handleRegisterNewProduct(data: ProductInterface) {
     const { date, description, pricePerUnit, quantity, type } = data
 
-    const newProduct: Omit<Product, "id"> = {
+    const newProduct: Omit<ProductInterface, "id"> = {
       date,
       description: description.toLowerCase(),
       pricePerUnit,
@@ -51,9 +41,7 @@ export function ModalFinancial({ registerProductModalIsOpen, setRegisterProductM
         setProductList(state => [...state, result])
       })
       
-      //reset()
-
-    // setRegisterStudentModalIsOpen(false)
+      reset()
   }
 
  

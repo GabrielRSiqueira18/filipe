@@ -2,7 +2,6 @@ import { StudentService } from "../api/services/students"
 import { StudentInterface } from "../pages/StudentPage/interfaces"
 import "./student.css"
 import { Check, X } from "phosphor-react"
-import { format } from "date-fns"
 
 interface StudentProps {
   id: number
@@ -30,54 +29,51 @@ export function Student({ id, name, startDate, phoneNumber ,invoiceValue, invoic
         setStudentsList(students)
       })
   }
-
-  const dueDateInDateJS = new Date(dueDate)
-
+  const dueDateSplited = dueDate.split("/")
+  
   let monthNumber
 
   switch (monthInEnglishActual) {
     case "january":
-      monthNumber = 0;
+      monthNumber = "01";
       break;
     case "february":
-      monthNumber = 1;
+      monthNumber = "02";
       break;
     case "march":
-      monthNumber = 2;
+      monthNumber = "03";
       break;
     case "april":
-      monthNumber = 3;
+      monthNumber = "04";
       break;
     case "may":
-      monthNumber = 4;
+      monthNumber = "05";
       break;
     case "june":
-      monthNumber = 5;
+      monthNumber = "06";
       break;
     case "july":
-      monthNumber = 6;
+      monthNumber = "07";
       break;
     case "august":
-      monthNumber = 7;
+      monthNumber = "08";
       break;
     case "september":
-      monthNumber = 8;
+      monthNumber = "09";
       break;
     case "october":
-      monthNumber = 9;
+      monthNumber = "10";
       break;
     case "november":
-      monthNumber = 10;
+      monthNumber = "011";
       break;
     case "december":
-      monthNumber = 11;
-      break;
-    default:
-      monthNumber = 0; 
+      monthNumber = "12";
       break;
   }
 
-  dueDateInDateJS.setMonth(monthNumber)
+  const dueDateFinal = `${dueDateSplited[0]}/${monthNumber}/${dueDateSplited[2]}`
+
 
   return (
     <tr>
@@ -85,7 +81,7 @@ export function Student({ id, name, startDate, phoneNumber ,invoiceValue, invoic
       <td>{name}</td>
       <td>{phoneNumber}</td>
       <td>{startDate}</td>
-      <td>{format(dueDateInDateJS, "dd/MM/yyyy")}</td>
+      <td>{dueDateFinal}</td>
       <td>
         <div>
           {monthsPayeds[monthInEnglishActual] ? "Sim" : "Não"}
