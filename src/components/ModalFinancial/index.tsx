@@ -21,7 +21,10 @@ export function ModalFinancial({ registerProductModalIsOpen, setRegisterProductM
   function closeModalWithClickInLayer(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     if (e.target instanceof HTMLDivElement && e.target.className === "modal-layer") {
       setRegisterProductModalIsOpen(false)
+      location.reload()
     }
+
+   
   }
 
   function handleRegisterNewProduct(data: ProductInterface) {
@@ -56,7 +59,7 @@ export function ModalFinancial({ registerProductModalIsOpen, setRegisterProductM
         >
           <header>
             <button>Cadastrar</button>
-            <button onClick={() => setRegisterProductModalIsOpen(false)}>X</button>
+            <button onClick={() => setRegisterProductModalIsOpen(() => {  location.reload(); return false })}>X</button>
           </header>
           <form onSubmit={handleSubmit(handleRegisterNewProduct)}>
             <div>

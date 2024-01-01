@@ -237,23 +237,83 @@ export function FinancialPage() {
       return date.getMonth() === monthNumber
     })
 
+    
+    setProductsList(filteredProducts)
+  });
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [ monthActualEnglish ]); // Only re-run when monthActualEnglish changes
+
+useEffect(() => {
+  let monthNumber = 0
+
+  switch (monthActualEnglish) {
+    case "january":
+      monthNumber = 0;
+      break;
+    case "february":
+      monthNumber = 1;
+      break;
+    case "march":
+      monthNumber = 2;
+      break;
+    case "april":
+      monthNumber = 3;
+      break;
+    case "may":
+      monthNumber = 4;
+      break;
+    case "june":
+      monthNumber = 5;
+      break;
+    case "july":
+      monthNumber = 6;
+      break;
+    case "august":
+      monthNumber = 7;
+      break;
+    case "september":
+      monthNumber = 8;
+      break;
+    case "october":
+      monthNumber = 9;
+      break;
+    case "november":
+      monthNumber = 10;
+      break;
+    case "december":
+      monthNumber = 11;
+      break;
+  }
+
+  ProductsService.getAll()
+  .then((products) => {
+    
+
+    const filteredProducts = products.filter((product) => {
+      const date = new Date(product.date)
+      return date.getMonth() === monthNumber
+    })
+
+    
+    setProductsList(() => filteredProducts)
+
     const totalValue = filteredProducts.reduce((finalValue, innitialValue) => {
       const value = Number(innitialValue.totalValue)
       return finalValue += innitialValue.type === "Entrada" ? value : -value
     }, 0)
-
+  
     const totalValuePerMonth = totalValue
     const totalValueAllMonths = allProductList.reduce((finalValue, innitialValue) => {
       const value = Number(innitialValue.totalValue)
       return finalValue += innitialValue.type === "Entrada" ? value : -value
     }, 0)
-
+  
     setTotal(totalValueAllMonths)
     setTotalNumberPerMonth(totalValuePerMonth)
-    setProductsList(() => filteredProducts)
   });
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [monthActualEnglish]); // Only re-run when monthActualEnglish changes
+
+  
+}, [allProductList, monthActualEnglish])
 
   async function getAllProducts() {
     ProductsService.getAll()

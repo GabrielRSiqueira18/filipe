@@ -1,8 +1,133 @@
 {
   "students": [
-    
+    {
+      "invoiceValue": "5",
+      "name": "g",
+      "startDate": "2024-01-08",
+      "phoneNumber": "G",
+      "situation": "Pago",
+      "dueDate": "2024-01-16",
+      "monthsPayeds": {
+        "january": true,
+        "february": true,
+        "march": false,
+        "april": false,
+        "may": false,
+        "june": false,
+        "july": false,
+        "august": false,
+        "september": false,
+        "october": false,
+        "november": false,
+        "december": false
+      },
+      "id": 1
+    },
+    {
+      "invoiceValue": "4",
+      "name": "g",
+      "startDate": "2024-01-27",
+      "phoneNumber": "G",
+      "situation": "Pago",
+      "dueDate": "5222-05-31",
+      "monthsPayeds": {
+        "january": true,
+        "february": false,
+        "march": false,
+        "april": false,
+        "may": false,
+        "june": false,
+        "july": false,
+        "august": false,
+        "september": false,
+        "october": false,
+        "november": false,
+        "december": false
+      },
+      "id": 2
+    }
   ],
   "products": [
-    
+    {
+      "date": "2024-01-26",
+      "description": "mesa",
+      "pricePerUnit": "1",
+      "quantity": "10",
+      "totalValue": 10,
+      "type": "Entrada",
+      "id": 1
+    },
+    {
+      "date": "2024-01-25",
+      "description": "g",
+      "pricePerUnit": "1",
+      "quantity": "1",
+      "totalValue": 1,
+      "type": "Entrada",
+      "id": 2
+    },
+    {
+      "date": "2024-01-12",
+      "description": "g",
+      "pricePerUnit": "1",
+      "quantity": "1",
+      "totalValue": 1,
+      "type": "Entrada",
+      "id": 3
+    },
+    {
+      "date": "2024-01-24",
+      "description": "g",
+      "pricePerUnit": "3",
+      "quantity": "2",
+      "totalValue": 6,
+      "type": "Entrada",
+      "id": 4
+    },
+    {
+      "date": "2024-01-18",
+      "description": "mesa",
+      "pricePerUnit": "3",
+      "quantity": "3",
+      "totalValue": 9,
+      "type": "Saída",
+      "id": 5
+    },
+    {
+      "date": "2024-01-27",
+      "description": "g",
+      "pricePerUnit": "3",
+      "quantity": "32",
+      "totalValue": 96,
+      "type": "Entrada",
+      "id": 6
+    },
+    {
+      "date": "2024-01-31",
+      "description": "g",
+      "pricePerUnit": "3",
+      "quantity": "2",
+      "totalValue": 6,
+      "type": "Entrada",
+      "id": 7
+    },
+    {
+      "date": "2024-01-17",
+      "description": "mesa",
+      "pricePerUnit": "10",
+      "quantity": "10",
+      "totalValue": 100,
+      "type": "Entrada",
+      "id": 8
+    },
+    {
+      "date": "2024-01-24",
+      "description": "cadeira",
+      "pricePerUnit": "2",
+      "quantity": "30",
+      "totalValue": 60,
+      "type": "Saída",
+      "id": 9
+    }
   ]
 }
