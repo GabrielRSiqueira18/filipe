@@ -13,7 +13,6 @@ interface Product {
   id: string
   date: string
   description: string
-  month: string
   pricePerUnit: number
   quantity: number
   totalValue: number
@@ -36,12 +35,11 @@ export function ModalFinancial({ registerProductModalIsOpen, setRegisterProductM
   }
 
   function handleRegisterNewProduct(data: Product) {
-    const { date, description, month, pricePerUnit, quantity, type } = data
+    const { date, description, pricePerUnit, quantity, type } = data
 
     const newProduct: Omit<Product, "id"> = {
       date,
       description: description.toLowerCase(),
-      month,
       pricePerUnit,
       quantity,
       totalValue: pricePerUnit * quantity,

@@ -2,19 +2,17 @@ interface ProductProps {
     id: string
     date: string
     description: string
-    month: string
     pricePerUnit: number
     quantity: number
     totalValue: number
     type: "Entrada" | "Saída"
   }
   
-  export function Product({ id, date, description, quantity, pricePerUnit, totalValue, type, month }: ProductProps) {
+  export function Product({ id, date, description, quantity, pricePerUnit, totalValue, type }: ProductProps) {
     return (
       <tr>
         <td>{id}</td>
         <td>{date}</td>
-        <td>{month}</td>
         <td>{description}</td>
         <td>{quantity}</td>
         <td>{pricePerUnit}</td>

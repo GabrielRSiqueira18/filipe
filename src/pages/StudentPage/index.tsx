@@ -183,7 +183,7 @@ export function StudentPage() {
       setStudentsIsSortedInvoiceBigger(false)
     }
   }
-
+ 
   function decreaseMonth() {
     setCountMonthActual(state => {
       if(state == 0) {
@@ -233,8 +233,8 @@ export function StudentPage() {
       <div className='students-container'>
         <header className='students-header'>
           <button onClick={() => setRegisterStudentModalIsOpen(true)}>Adicionar Aluno</button>
-          <NavLink to={"/financeiro"}>
-            <button>Financeiro</button>
+          <NavLink to={"/produtos"}>
+            <button>Produtos</button>
           </NavLink>
         </header>
 

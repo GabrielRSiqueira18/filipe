@@ -4,7 +4,6 @@ interface Product {
   id: string
   date: string
   description: string
-  month: string
   pricePerUnit: number
   quantity: number
   totalValue: number

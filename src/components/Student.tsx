@@ -1,8 +1,8 @@
-import { useEffect } from "react"
 import { StudentService } from "../api/services/students"
 import { StudentInterface } from "../pages/StudentPage/interfaces"
 import "./student.css"
 import { Check, X } from "phosphor-react"
+import { format } from "date-fns"
 
 interface StudentProps {
   id: number
@@ -31,6 +31,53 @@ export function Student({ id, name, startDate, phoneNumber ,invoiceValue, invoic
       })
   }
 
+  const dueDateInDateJS = new Date(dueDate)
+
+  let monthNumber
+
+  switch (monthInEnglishActual) {
+    case "january":
+      monthNumber = 0;
+      break;
+    case "february":
+      monthNumber = 1;
+      break;
+    case "march":
+      monthNumber = 2;
+      break;
+    case "april":
+      monthNumber = 3;
+      break;
+    case "may":
+      monthNumber = 4;
+      break;
+    case "june":
+      monthNumber = 5;
+      break;
+    case "july":
+      monthNumber = 6;
+      break;
+    case "august":
+      monthNumber = 7;
+      break;
+    case "september":
+      monthNumber = 8;
+      break;
+    case "october":
+      monthNumber = 9;
+      break;
+    case "november":
+      monthNumber = 10;
+      break;
+    case "december":
+      monthNumber = 11;
+      break;
+    default:
+      monthNumber = 0; 
+      break;
+  }
+
+  dueDateInDateJS.setMonth(monthNumber)
 
   return (
     <tr>
@@ -38,7 +85,7 @@ export function Student({ id, name, startDate, phoneNumber ,invoiceValue, invoic
       <td>{name}</td>
       <td>{phoneNumber}</td>
       <td>{startDate}</td>
-      <td>{dueDate}</td>
+      <td>{format(dueDateInDateJS, "dd/MM/yyyy")}</td>
       <td>
         <div>
           {monthsPayeds[monthInEnglishActual] ? "Sim" : "Não"}

@@ -10,6 +10,7 @@ import { ProductInterface, ProductQuerySearch } from "./interfaces"
 import { useForm } from "react-hook-form"
 import { formatter } from "../../utils/formatterValueToBRL"
 import { format } from "date-fns"
+import { ArrowLeft, ArrowRight } from "phosphor-react"
 
 interface ReactPaginateOnPageChangeEvent {
   selected: number
@@ -21,7 +22,7 @@ export function FinancialPage() {
 
   //Pagination
   const [ pageNumber, setPageNumber ] = useState(0)
-  const productPerPage = 10
+  const productPerPage = 8
   const pageVisited = pageNumber * productPerPage
 
   const displayProducts = productsList.slice(pageVisited, pageVisited + productPerPage).map(product => {
@@ -33,7 +34,6 @@ export function FinancialPage() {
         id= {product.id}
         date= {format(productDate, "dd/MM/yyyy")}
         description={product.description.toUpperCase()}
-        month={product.month}
         pricePerUnit={product.pricePerUnit}
         quantity={product.quantity}
         totalValue={product.totalValue}
@@ -46,6 +46,67 @@ export function FinancialPage() {
 
   function changePage(event: ReactPaginateOnPageChangeEvent) {
     setPageNumber(event.selected)
+  }
+
+  const [ countMonthActual, setCountMonthActual ] = useState(0)
+
+  const months = [
+    "january",
+    "february",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+   "december",
+  ]
+
+  const monthActualEnglish = months[countMonthActual]
+  let monthActualPortuguese
+
+  switch (monthActualEnglish) {
+    case "january":
+      monthActualPortuguese = "Janeiro";
+      break;
+    case "february":
+      monthActualPortuguese = "Fevereiro";
+      break;
+    case "march":
+      monthActualPortuguese = "Março";
+      break;
+    case "april":
+      monthActualPortuguese = "Abril";
+      break;
+    case "may":
+      monthActualPortuguese = "Maio";
+      break;
+    case "june":
+      monthActualPortuguese = "Junho";
+      break;
+    case "july":
+      monthActualPortuguese = "Julho";
+      break;
+    case "august":
+      monthActualPortuguese = "Agosto";
+      break;
+    case "september":
+      monthActualPortuguese = "Setembro";
+      break;
+    case "october":
+      monthActualPortuguese = "Outubro";
+      break;
+    case "november":
+      monthActualPortuguese = "Novembro";
+      break;
+    case "december":
+      monthActualPortuguese = "Dezembro";
+      break;
+    default:
+      console.error("Invalid month name:", monthActualEnglish);
   }
 
   //Get Products in DB
@@ -112,6 +173,27 @@ export function FinancialPage() {
   const entry = productsList.filter(product => product.type === "Entrada").length
   const out = productsList.filter(product => product.type === "Saída").length
   
+  function decreaseMonth() {
+    setCountMonthActual(state => {
+      if(state == 0) {
+        return state = 0
+      } else  {
+        return state -= 1
+      }
+    })
+  }
+  
+  function addMonths() {
+    setCountMonthActual(state => {
+      if(state >= 11) {
+        return state = 11
+      } else  {
+        return state += 1
+      }
+    })
+  }
+
+
   return(
     <>
       <ModalFinancial
@@ -163,6 +245,13 @@ export function FinancialPage() {
       </div>
     </form>
 
+    <div className="container-arrows-months">
+        <button onClick={() => decreaseMonth()}> <ArrowLeft size={14} /> </button>
+        {monthActualPortuguese} 
+        <button onClick={() => addMonths()}> <ArrowRight size={14} /> </button>
+      </div>
+      RS 1000,00
+
 
         <div className='table-container'>
           <table>
@@ -170,7 +259,6 @@ export function FinancialPage() {
               <tr>
                 <th>ID</th>
                 <th>Data</th>
-                <th>Mês</th>
                 <th>Descrição</th>
                 <th>Quantidade</th>
                 <th>Valor Unitário</th>
