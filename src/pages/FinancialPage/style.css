@@ -112,45 +112,7 @@
   background-color: black;
 }
 
-.table-container {
-  width: 100%;
-  overflow-x: auto;
-  margin-top: 30px;
-}
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  border: 1px solid black;
-  margin-top: 30px;
-
-  th, td {
-    padding: 0.75rem; 
-    font-size: 0.875rem; 
-    line-height: 1.6;
-    border: 1px solid black;
-    text-align: center;
-    white-space: normal; 
-    word-wrap: break-word; 
-}
-
-  th:first-child {
-    border-top-left-radius: 8px;
-    padding-left: 1.5rem;
-  }
-
-  th:last-child {
-    border-top-right-radius: 8px;
-    padding-right: 1.5rem;
-  }
-
-  td:first-child {
-    padding-left: 0.25rem; 
-  }
-  td:last-child {
-    right: 1.5rem;
-  }
-}
 
 .form-filter {
   width: 100%;

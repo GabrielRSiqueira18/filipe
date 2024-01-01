@@ -302,17 +302,13 @@
   background-color: black;
 }
 
-.table-container {
-  width: 100%;
-  overflow-x: auto;
-  margin-top: 30px;
-}
+
 
 table {
   width: 100%;
   border-collapse: collapse;
   border: 1px solid black;
-  margin-top: 30px;
+  margin-top: 20px;
 
   th, td {
     padding: 0.75rem; 
@@ -376,6 +372,27 @@ table {
 .late {
   background-color: var(--red-700);
   color: var(--gray-50) !important;
+}
+
+.container-arrows-months {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 10px;
+  font-family: bold;
+  font-size: 1.25rem;
+
+  button {
+    all: unset;
+    font-size: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    top: 1px;
+
+  }
 }
 
 @media screen and (max-width: 1024px) {

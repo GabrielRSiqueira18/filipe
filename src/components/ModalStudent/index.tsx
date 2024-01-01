@@ -88,8 +88,6 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
     // setRegisterStudentModalIsOpen(false)
   }
 
-  
-
   return (
     <div 
         onClick={(e) => closeModalWithClickInLayer(e)}
@@ -147,19 +145,7 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
                 {...register("dueDate")} 
               /></div> 
 
-            <div>
-              <label 
-                htmlFor="invoicesPayeds">Faturas Pagas:
-              </label>
-              <input 
-                id='invoicesPayeds' 
-                type="number"
-                {...register("invoicePayeds")} 
-              /></div> 
-
-            
-
-            <div>
+             <div>
               <label 
                 htmlFor="invoiceValue">Valor Fatura:
               </label>

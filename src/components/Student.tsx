@@ -1,6 +1,8 @@
 import { useEffect } from "react"
 import { StudentService } from "../api/services/students"
 import { StudentInterface } from "../pages/StudentPage/interfaces"
+import "./student.css"
+import { Check, X } from "phosphor-react"
 
 interface StudentProps {
   id: number
@@ -29,8 +31,6 @@ export function Student({ id, name, startDate, phoneNumber ,invoiceValue, invoic
       })
   }
 
-  console.log(monthsPayeds)
-
 
   return (
     <tr>
@@ -42,9 +42,9 @@ export function Student({ id, name, startDate, phoneNumber ,invoiceValue, invoic
       <td>
         <div>
           {monthsPayeds[monthInEnglishActual] ? "Sim" : "Não"}
-          <div>
-            <button onClick={() => handleEditMonthPayedToNo(id, monthInEnglishActual, true)}>/_</button>
-            <button onClick={() => handleEditMonthPayedToNo(id, monthInEnglishActual, false)}>x</button>
+          <div className="container-buttons-ispayed">
+            <button onClick={() => handleEditMonthPayedToNo(id, monthInEnglishActual, true)}><Check color="#15803d" size={14} /></button>
+            <button onClick={() => handleEditMonthPayedToNo(id, monthInEnglishActual, false)}><X color="#b91c1c" size={14} /></button>
           </div>
         </div>
       </td>

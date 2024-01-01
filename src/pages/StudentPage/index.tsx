@@ -9,7 +9,7 @@ import { ModalStudent } from "../../components/ModalStudent";
 import { ReactPaginateOnPageChangeEvent, StudentInterface, StudentQuerySearch } from "./interfaces/index"
 import { useForm } from "react-hook-form";
 import { formatter } from "../../utils/formatterValueToBRL";
-import { format } from "date-fns";
+import { addDays, format, isBefore } from "date-fns";
 import { ArrowRight, ArrowLeft } from "phosphor-react"
 
 export function StudentPage() {
@@ -18,7 +18,7 @@ export function StudentPage() {
 
   //Pagination
   const [ pageNumber, setPageNumber ] = useState(0)
-  const productPerPage = 10
+  const productPerPage = 8
   const pageVisited = pageNumber * productPerPage
   const pageCount = Math.ceil(studentsList.length / productPerPage)
 
@@ -91,8 +91,23 @@ export function StudentPage() {
   }
 
   const displayStudents = studentsList.slice(pageVisited, pageVisited + productPerPage).map(student => {
-    
+    const dueDate = new Date(student.dueDate)
+    const dueDateCorrect = addDays(dueDate, 1)
 
+    const today = new Date()
+
+    const paymentIsDue = isBefore(dueDate, today)
+
+    console.log(paymentIsDue)
+
+    const startDate = new Date(student.startDate)
+    const startDateCorrect = addDays(startDate, 1)
+
+    const situationPaymentMonth = student.monthsPayeds[monthActualEnglish as keyof typeof student.monthsPayeds] ? "Pago" : paymentIsDue ? "Vencido" : "Não Pago";
+    console.log(student.dueDate)
+
+    const invoicesPayedsArray = Object.values(student.monthsPayeds).filter(month => month === true || month === false);
+    const invoicesPayeds = invoicesPayedsArray.filter(payed => payed === true).length
 
     return (
       <Student
@@ -100,13 +115,13 @@ export function StudentPage() {
         id={student.id}
         name={student.name.toUpperCase()}
         invoiceValue={student.invoiceValue}
-        invoicesPayeds={student.invoicePayeds}
-        situation={student.situation}
-        dueDate={format(student.dueDate, "dd/MM/yyyy")}
+        invoicesPayeds={invoicesPayeds.toString()}
+        situation={situationPaymentMonth}
+        dueDate={format(dueDateCorrect, "dd/MM/yyyy")}
         monthsPayeds={student.monthsPayeds}
         monthInEnglishActual={monthActualEnglish}
         setStudentsList={setStudentsList}
-        startDate={format(student.startDate, "dd/MM/yyyy")}
+        startDate={format(startDateCorrect, "dd/MM/yyyy")}
         phoneNumber={student.phoneNumber}
       />
     )
@@ -127,7 +142,10 @@ export function StudentPage() {
   
   //Adjust values 
   const totalValues = studentsList.reduce((finalValue, innitialValue) => {
-    const value = Number(innitialValue.invoiceValue) * Number(innitialValue.invoicePayeds) 
+    const invoicesPayedsArray = Object.values(innitialValue.monthsPayeds).filter(month => month === true || month === false);
+    const invoicesPayeds = invoicesPayedsArray.filter(payed => payed === true).length
+
+    const value = Number(innitialValue.invoiceValue) * Number(invoicesPayeds) 
     return finalValue += value
   }, 0)
 
@@ -202,6 +220,7 @@ export function StudentPage() {
         <div className='container-students-situation'>
             <h2>Alunos:</h2>
             <p className='ok'>{situationOk > 1 ? "Pagos" : "Pago"}: <span>{situationOk}</span></p>
+            <p>{}</p>
             <p className='overdue'>{situationDue > 1 ? "Vencidos" : "Vencido"}: <span>{situationDue}</span></p>
           </div>
           <div className='container-total-values-students'>
@@ -237,10 +256,10 @@ export function StudentPage() {
       </div>
     </form> 
 
-      <div>
-        <button onClick={() => decreaseMonth()}> <ArrowRight size={22} /> </button>
+      <div className="container-arrows-months">
+        <button onClick={() => decreaseMonth()}> <ArrowLeft size={14} /> </button>
         {monthActualPortuguese}
-        <button onClick={() => addMonths()}> <ArrowRight size={22} /> </button>
+        <button onClick={() => addMonths()}> <ArrowRight size={14} /> </button>
       </div>
 
         <div className='table-container'>
