@@ -8,7 +8,21 @@ interface Student {
   invoicePayeds: string
   invoiceValue: string
   situation: string
-  dayToPay: string
+  dueDate: string
+  monthsPayeds: {
+    january: boolean,
+    february: boolean,
+    march: boolean,
+    april: boolean,
+    may: boolean,
+    june: boolean,
+    july: boolean,
+    august: boolean,
+    september: boolean,
+    october: boolean,
+    november: boolean,
+    december: boolean
+  }
 }
 
 async function getAll(): Promise<Student[]> {
@@ -34,9 +48,25 @@ async function create(dataCreate: Omit<Student, "id">): Promise<Student> {
 
   return data
 }
+async function edit(id: number, monthEdit: string, status: boolean): Promise<Student> {
+  const apiInstance = await Api();
+
+  const originalStudent = (await apiInstance.get(`/students/${id}`)).data;
+
+  originalStudent.monthsPayeds = {
+    ...originalStudent.monthsPayeds,
+    [monthEdit]: status
+  };
+
+  
+  const { data } = await apiInstance.put(`/students/${id}`, originalStudent);
+
+  return data;
+}
 
 export const StudentService = {
   getAll,
   getByName,
-  create
+  create,
+  edit
 }

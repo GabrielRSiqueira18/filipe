@@ -7,9 +7,10 @@ import { StudentService } from "../../api/services/students";
 import ReactPaginate from "react-paginate";
 import { ModalStudent } from "../../components/ModalStudent";
 import { ReactPaginateOnPageChangeEvent, StudentInterface, StudentQuerySearch } from "./interfaces/index"
-import { formatDate } from "../../utils/formatDate";
 import { useForm } from "react-hook-form";
 import { formatter } from "../../utils/formatterValueToBRL";
+import { format } from "date-fns";
+import { ArrowRight, ArrowLeft } from "phosphor-react"
 
 export function StudentPage() {
   const [ studentsList, setStudentsList ] = useState<StudentInterface[]>([])
@@ -21,11 +22,78 @@ export function StudentPage() {
   const pageVisited = pageNumber * productPerPage
   const pageCount = Math.ceil(studentsList.length / productPerPage)
 
+  const [ countMonthActual, setCountMonthActual ] = useState(0)
+
+  const months = [
+    "january",
+    "february",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+   "december",
+  ]
+
+  const monthActualEnglish = months[countMonthActual]
+  let monthActualPortuguese
+
+
+  
+  switch (monthActualEnglish) {
+    case "january":
+      monthActualPortuguese = "Janeiro";
+      break;
+    case "february":
+      monthActualPortuguese = "Fevereiro";
+      break;
+    case "march":
+      monthActualPortuguese = "Março";
+      break;
+    case "april":
+      monthActualPortuguese = "Abril";
+      break;
+    case "may":
+      monthActualPortuguese = "Maio";
+      break;
+    case "june":
+      monthActualPortuguese = "Junho";
+      break;
+    case "july":
+      monthActualPortuguese = "Julho";
+      break;
+    case "august":
+      monthActualPortuguese = "Agosto";
+      break;
+    case "september":
+      monthActualPortuguese = "Setembro";
+      break;
+    case "october":
+      monthActualPortuguese = "Outubro";
+      break;
+    case "november":
+      monthActualPortuguese = "Novembro";
+      break;
+    case "december":
+      monthActualPortuguese = "Dezembro";
+      break;
+    default:
+      console.error("Invalid month name:", monthActualEnglish);
+  }
+
+
   function changePage(event: ReactPaginateOnPageChangeEvent) {
     setPageNumber(event.selected)
   }
 
   const displayStudents = studentsList.slice(pageVisited, pageVisited + productPerPage).map(student => {
+    
+
+
     return (
       <Student
         key={student.id}
@@ -34,10 +102,12 @@ export function StudentPage() {
         invoiceValue={student.invoiceValue}
         invoicesPayeds={student.invoicePayeds}
         situation={student.situation}
-        dayToPay={student.dayToPay}
-
-        startDate={formatDate(student.startDate)}
-        phoneNumber={formatDate(student.phoneNumber)}
+        dueDate={format(student.dueDate, "dd/MM/yyyy")}
+        monthsPayeds={student.monthsPayeds}
+        monthInEnglishActual={monthActualEnglish}
+        setStudentsList={setStudentsList}
+        startDate={format(student.startDate, "dd/MM/yyyy")}
+        phoneNumber={student.phoneNumber}
       />
     )
   })
@@ -96,6 +166,29 @@ export function StudentPage() {
     }
   }
 
+  function decreaseMonth() {
+    setCountMonthActual(state => {
+      if(state == 0) {
+        return state = 0
+      } else  {
+        return state -= 1
+      }
+    })
+  }
+  
+  function addMonths() {
+    setCountMonthActual(state => {
+      if(state >= 11) {
+        return state = 11
+      } else  {
+        return state += 1
+      }
+    })
+  }
+
+  
+
+
   return(
     <>
       <ModalStudent
@@ -144,15 +237,22 @@ export function StudentPage() {
       </div>
     </form> 
 
+      <div>
+        <button onClick={() => decreaseMonth()}> <ArrowRight size={22} /> </button>
+        {monthActualPortuguese}
+        <button onClick={() => addMonths()}> <ArrowRight size={22} /> </button>
+      </div>
+
         <div className='table-container'>
           <table>
             <thead>
               <tr>
                 <th>ID</th>
                 <th>Aluno</th>
-                <th>Data Início</th>
                 <th>Número</th>
-                <th>Prazo Dias</th>
+                <th>Data Início</th>
+                <th>Vencimento da Fatura</th>
+                <th>Fatura Paga</th>
                 <th>Valor</th>
                 <th>Faturas Pagas</th>
                 <th>Situação</th>

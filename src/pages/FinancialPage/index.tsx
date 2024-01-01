@@ -6,10 +6,10 @@ import { Product } from "../../components/Product"
 import { ProductsService } from "../../api/services/product"
 import ReactPaginate from "react-paginate"
 import { ModalFinancial } from "../../components/ModalFinancial"
-import { formatDate } from "../../utils/formatDate"
 import { ProductInterface, ProductQuerySearch } from "./interfaces"
 import { useForm } from "react-hook-form"
 import { formatter } from "../../utils/formatterValueToBRL"
+import { format } from "date-fns"
 
 interface ReactPaginateOnPageChangeEvent {
   selected: number
@@ -25,11 +25,13 @@ export function FinancialPage() {
   const pageVisited = pageNumber * productPerPage
 
   const displayProducts = productsList.slice(pageVisited, pageVisited + productPerPage).map(product => {
+    const productDate = new Date(product.date)
+
     return (
       <Product
         key={product.id}
         id= {product.id}
-        date= {formatDate(product.date)}
+        date= {format(productDate, "dd/MM/yyyy")}
         description={product.description.toUpperCase()}
         month={product.month}
         pricePerUnit={product.pricePerUnit}
@@ -110,7 +112,6 @@ export function FinancialPage() {
   const entry = productsList.filter(product => product.type === "Entrada").length
   const out = productsList.filter(product => product.type === "Saída").length
   
-  console.log(totalValue)
   return(
     <>
       <ModalFinancial

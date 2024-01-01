@@ -12,7 +12,21 @@ interface Student {
   invoicePayeds: string
   invoiceValue: string
   situation: string
-  dayToPay: string
+  dueDate: string
+  monthsPayeds: {
+    january: boolean,
+    february: boolean,
+    march: boolean,
+    april: boolean,
+    may: boolean,
+    june: boolean,
+    july: boolean,
+    august: boolean,
+    september: boolean,
+    october: boolean,
+    november: boolean,
+    december: boolean
+  }
 }
 
 interface ModalProps {
@@ -36,7 +50,22 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
   }
 
   function handleRegisterNewStudent(data: Student) {
-    const { invoiceValue, dayToPay,invoicePayeds, name, startDate, phoneNumber, situation } = data
+    const { invoiceValue, invoicePayeds, name, startDate, phoneNumber, situation, dueDate } = data
+
+    const monthsPayeds = {
+      january: false,
+      february: false,
+      march: false,
+      april: false,
+      may: false,
+      june: false,
+      july: false,
+      august: false,
+      september: false,
+      october: false,
+      november: false,
+      december: false
+    }
 
     const newStudent: Omit<Student, "id"> = {
       invoiceValue,
@@ -45,7 +74,8 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
       startDate,
       phoneNumber,
       situation,
-      dayToPay
+      dueDate,
+      monthsPayeds: monthsPayeds
     }
 
     StudentService.create(newStudent)
@@ -57,6 +87,8 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
 
     // setRegisterStudentModalIsOpen(false)
   }
+
+  
 
   return (
     <div 
@@ -85,6 +117,17 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
 
             <div>
               <label 
+                htmlFor="phoneNumber">Número P/ Contato:
+              </label>
+              <input 
+                id='phoneNumber' 
+                type="text"
+                {...register("phoneNumber")} 
+              /> 
+            </div>
+
+            <div>
+              <label 
                 htmlFor="startDate">Data do Início do Aluno:
               </label>
               <input 
@@ -96,23 +139,12 @@ export function ModalStudent({ modalIsOpen, setRegisterStudentModalIsOpen, setSt
 
             <div>
               <label 
-                htmlFor="phoneNumber">Número:
+                htmlFor="dueDate">Vencimento da Fatura:
               </label>
               <input 
-                id='phoneNumber' 
-                type="text"
-                {...register("phoneNumber")} 
-              /> 
-            </div>
-
-            <div>
-              <label 
-                htmlFor="dayToPay">Prazo Dias:
-              </label>
-              <input 
-                id='dayToPay' 
-                type="number"
-                {...register("dayToPay")} 
+                id='dueDate' 
+                type="date"
+                {...register("dueDate")} 
               /></div> 
 
             <div>

@@ -1,64 +1,29 @@
 {
   "students": [
     {
-      "invoiceValue": "10",
-      "invoicePayeds": "2",
+      "invoiceValue": "",
+      "invoicePayeds": "",
       "name": "gabriel",
-      "startDate": "",
-      "phoneNumber": "",
-      "situation": "Paga",
-      "dayToPay": "30",
-      "id": 1
-    },
-    {
-      "invoiceValue": "",
-      "invoicePayeds": "",
-      "name": "",
-      "startDate": "",
-      "phoneNumber": "",
+      "startDate": "2001-05-15",
+      "phoneNumber": "3535",
       "situation": "Pago",
-      "dayToPay": "",
-      "id": 2
-    },
-    {
-      "invoiceValue": "",
-      "invoicePayeds": "",
-      "name": "",
-      "startDate": "",
-      "phoneNumber": "",
-      "situation": "Vencida",
-      "dayToPay": "",
-      "id": 3
-    },
-    {
-      "invoiceValue": "",
-      "invoicePayeds": "",
-      "name": "",
-      "startDate": "",
-      "phoneNumber": "",
-      "situation": "Vencido",
-      "dayToPay": "",
-      "id": 4
+      "dueDate": "2000-02-21",
+      "monthsPayeds": {
+        "january": true,
+        "february": false,
+        "march": false,
+        "april": false,
+        "may": false,
+        "june": true,
+        "july": false,
+        "august": false,
+        "september": false,
+        "october": false,
+        "november": false,
+        "december": false
+      },
+      "id": 1
     }
   ],
-  "products": [
-    {
-      "date": "2023-12-07",
-      "description": "gabriel",
-      "pricePerUnit": "5",
-      "quantity": "10",
-      "totalValue": 50,
-      "type": "Saída",
-      "id": 1
-    },
-    {
-      "date": "2023-12-15",
-      "description": "g",
-      "pricePerUnit": "30",
-      "quantity": "10",
-      "totalValue": 300,
-      "type": "Entrada",
-      "id": 2
-    }
-  ]
+  "products": []
 }

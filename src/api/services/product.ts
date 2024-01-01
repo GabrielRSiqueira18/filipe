@@ -23,7 +23,6 @@ async function getByDescription(value: string): Promise<Product[]> {
   const apiInstance = await Api()
 
   const { data } = await apiInstance.get(`/products/?description_like=${value}`)
-  console.log(data)
 
   return data
 }
