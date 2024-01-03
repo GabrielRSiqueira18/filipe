@@ -302,6 +302,10 @@
   background-color: black;
 }
 
+.table-container {
+  width: 100%;
+  overflow: auto;
+}
 
 
 table {
@@ -309,6 +313,7 @@ table {
   border-collapse: collapse;
   border: 1px solid black;
   margin-top: 20px;
+  overflow: auto;
 
   th, td {
     padding: 0.75rem; 
